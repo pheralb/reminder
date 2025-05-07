@@ -7,5 +7,5 @@ export default {
   dbCredentials: {
     url: env.DATABASE_URL,
   },
-  tablesFilter: ["usereminder_*"],
+  tablesFilter: ["reminder_*"],
 } satisfies Config;

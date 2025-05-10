@@ -5,6 +5,9 @@ import type { ReactNode } from "react";
 import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 
+// Fonts:
+import { fontSans } from "@/fonts";
+
 // Metadata:
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -16,7 +19,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={cn(`${geist.variable}`)}>
+    <html lang="en" className={cn(`${fontSans.variable}`)}>
       <body>{children}</body>
     </html>
   );

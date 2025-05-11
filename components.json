@@ -8,7 +8,7 @@
     "config": "",
     "css": "src/styles/globals.css",
     "baseColor": "zinc",
-    "cssVariables": true,
+    "cssVariables": false,
     "prefix": ""
   },
   "aliases": {

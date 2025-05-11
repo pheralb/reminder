@@ -9,8 +9,11 @@ import { cn } from "@/utils/cn";
 import { fontSans, instrumentSans } from "@/fonts";
 
 // Providers:
-import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/providers/themeProvider";
+import ClerkCustomProvider from "@/providers/clerkProvider";
+
+// Layout:
+import Sidebar from "@/components/sidebar/sidebar";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -23,25 +26,25 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            `${fontSans.variable} ${instrumentSans.variable}`,
-            "font-sans antialiased",
-            "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
-          )}
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          `${fontSans.variable} ${instrumentSans.variable}`,
+          "font-sans antialiased",
+          "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          <ClerkCustomProvider>
+            <Sidebar>{children}</Sidebar>
+          </ClerkCustomProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

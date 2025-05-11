@@ -6,7 +6,11 @@ import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 
 // Fonts:
-import { fontSans } from "@/fonts";
+import { fontSans, instrumentSans } from "@/fonts";
+
+// Providers:
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/providers/themeProvider";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -19,8 +23,25 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={cn(`${fontSans.variable}`)}>
-      <body>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            `${fontSans.variable} ${instrumentSans.variable}`,
+            "font-sans antialiased",
+            "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
+          )}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

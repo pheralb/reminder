@@ -2,6 +2,11 @@ import { cn } from "@/utils/cn";
 
 import Link from "next/link";
 import UserMenu from "@/components/auth/userMenu";
+import ExternalLink from "@/ui/externalLink";
+import { buttonVariants } from "@/ui/button";
+import GitHub from "../logos/github";
+import { appConfig } from "@/config";
+import { ArrowUpRight } from "lucide-react";
 
 const SidebarContent = () => {
   return (
@@ -22,7 +27,24 @@ const SidebarContent = () => {
             <span>Reminder</span>
           </Link>
         </div>
-        <UserMenu />
+        <div className="flex flex-col space-y-3">
+          <ExternalLink
+            href={appConfig.repositoryUrl}
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+              }),
+              "justify-between text-sm",
+            )}
+          >
+            <div className="flex items-center space-x-2">
+              <GitHub width={16} height={16} />
+              <span>Repository</span>
+            </div>
+            <ArrowUpRight size={14} className="text-zinc-500" />
+          </ExternalLink>
+          <UserMenu />
+        </div>
       </nav>
     </aside>
   );

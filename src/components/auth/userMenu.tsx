@@ -5,7 +5,7 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 
-import { ChevronUpIcon, UserIcon } from "lucide-react";
+import { ChevronRightIcon, ChevronUpIcon, UserIcon } from "lucide-react";
 
 const UserMenu = async () => {
   const user = await currentUser();
@@ -13,7 +13,7 @@ const UserMenu = async () => {
     <div
       className={cn(
         "border border-zinc-200 dark:border-zinc-800",
-        "rounded-sm p-2.5 shadow-sm",
+        "overflow-hidden rounded-md p-2.5 shadow-sm",
       )}
     >
       {user ? (
@@ -40,16 +40,27 @@ const UserMenu = async () => {
           </div>
         </div>
       ) : (
-        <Link
-          href="/auth"
-          className={buttonVariants({
-            variant: "outline",
-            className: "w-full justify-start",
-          })}
-        >
-          <UserIcon size={14} />
-          <span>Sign In</span>
-        </Link>
+        <div className="flex flex-col space-y-2">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Sign in to your account to save your reminders and access them from
+            any device
+          </p>
+          <Link
+            href="/auth"
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+              }),
+              "w-full justify-between",
+            )}
+          >
+            <div className="flex items-center space-x-2">
+              <UserIcon size={14} />
+              <span>Sign In</span>
+            </div>
+            <ChevronRightIcon size={14} className="text-zinc-500" />
+          </Link>
+        </div>
       )}
     </div>
   );

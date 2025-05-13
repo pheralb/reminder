@@ -26,6 +26,9 @@
   "dependencies": {
     "@clerk/nextjs": "6.19.2",
     "@clerk/themes": "2.2.43",
+    "@formkit/tempo": "0.1.2",
+    "@radix-ui/react-dialog": "1.1.13",
+    "@radix-ui/react-popover": "1.1.13",
     "@radix-ui/react-slot": "1.2.2",
     "@t3-oss/env-nextjs": "0.13.4",
     "class-variance-authority": "0.7.1",

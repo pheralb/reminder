@@ -13,7 +13,8 @@ import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
 
 // Layout:
-import Sidebar from "@/components/sidebar/sidebar";
+import Header from "@/components/layout/header";
+import HeaderOptions from "@/components/layout/headerOptions";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -41,7 +42,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkCustomProvider>
-            <Sidebar>{children}</Sidebar>
+            <Header />
+            <main className="mt-16">
+              <HeaderOptions />
+              {children}
+            </main>
           </ClerkCustomProvider>
         </ThemeProvider>
       </body>

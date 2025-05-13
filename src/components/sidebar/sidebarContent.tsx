@@ -8,14 +8,19 @@ import GitHub from "../logos/github";
 import { appConfig } from "@/config";
 import { ArrowUpRight } from "lucide-react";
 
-const SidebarContent = () => {
+interface SidebarContentProps {
+  close: boolean;
+}
+
+const SidebarContent = ({ close }: SidebarContentProps) => {
   return (
     <aside
       className={cn(
         "fixed top-0 left-0 h-full",
         "overflow-x-hidden overflow-y-auto",
         "bg-zinc-100 dark:bg-zinc-900",
-        "w-56",
+        "transition-all duration-300 ease-in-out",
+        close ? "w-0 opacity-0" : "w-56 opacity-100",
       )}
     >
       <nav className="flex h-full flex-col px-4 pt-6 pb-5">
@@ -43,7 +48,14 @@ const SidebarContent = () => {
             </div>
             <ArrowUpRight size={14} className="text-zinc-500" />
           </ExternalLink>
-          <UserMenu />
+          <div
+            className={cn(
+              "border border-zinc-200 dark:border-zinc-800",
+              "overflow-hidden rounded-md p-2.5 shadow-sm",
+            )}
+          >
+            <UserMenu />
+          </div>
         </div>
       </nav>
     </aside>

@@ -6,15 +6,14 @@ import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 
 // Fonts:
-import { fontSans, instrumentSans } from "@/fonts";
+import { fontSans } from "@/fonts";
 
 // Providers:
 import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
 
 // Layout:
-import Header from "@/components/layout/header";
-import HeaderOptions from "@/components/layout/headerOptions";
+import Sidebar from "@/components/layout/sidebar";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -30,7 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${fontSans.variable} ${instrumentSans.variable}`,
+          `${fontSans.variable}`,
           "font-sans antialiased",
           "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
         )}
@@ -42,11 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkCustomProvider>
-            <Header />
-            <main className="mt-16">
-              <HeaderOptions />
-              {children}
-            </main>
+            <Sidebar>{children}</Sidebar>
           </ClerkCustomProvider>
         </ThemeProvider>
       </body>

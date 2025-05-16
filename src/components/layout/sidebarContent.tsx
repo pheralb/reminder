@@ -9,30 +9,27 @@ import { appConfig } from "@/config";
 import { ArrowUpRight } from "lucide-react";
 
 interface SidebarContentProps {
-  close: boolean;
+  isOpen: boolean;
 }
 
-const SidebarContent = ({ close }: SidebarContentProps) => {
+const SidebarContent = ({ isOpen }: SidebarContentProps) => {
   return (
     <aside
       className={cn(
         "fixed top-0 left-0 h-full",
         "overflow-x-hidden overflow-y-auto",
-        "bg-zinc-100 dark:bg-zinc-900",
+        "bg-zinc-100 dark:bg-zinc-800/20",
         "transition-all duration-300 ease-in-out",
-        close ? "w-0 opacity-0" : "w-56 opacity-100",
+        isOpen ? "w-56" : "w-0",
       )}
     >
       <nav className="flex h-full flex-col px-4 pt-6 pb-5">
         <div className="flex flex-1">
-          <Link
-            href="/"
-            className="font-instrument-sans h-fit text-2xl font-medium"
-          >
+          <Link href="/" className="h-fit text-xl font-medium tracking-tight">
             <span>Reminder</span>
           </Link>
         </div>
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col space-y-2">
           <ExternalLink
             href={appConfig.repositoryUrl}
             className={cn(
@@ -50,8 +47,8 @@ const SidebarContent = ({ close }: SidebarContentProps) => {
           </ExternalLink>
           <div
             className={cn(
-              "border border-zinc-200 dark:border-zinc-800",
-              "overflow-hidden rounded-md p-2.5 shadow-sm",
+              "rounded-md border border-zinc-200 dark:border-zinc-800",
+              "overflow-hidden p-2.5 shadow-sm",
             )}
           >
             <UserMenu />

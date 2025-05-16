@@ -10,10 +10,20 @@ import { UserIcon, ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { Skeleton } from "@/ui/skeleton";
 
 const UserMenu = () => {
-  const { isSignedIn, isLoaded } = useUser();
+  const { user, isSignedIn, isLoaded } = useUser();
 
   if (!isLoaded) {
-    return <Skeleton className="h-8 w-8 rounded-full" />;
+    return (
+      <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-0.5">
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+        <div className="flex flex-col space-y-0.5">
+          <Skeleton className="h-4 w-20 rounded-md" />
+          <Skeleton className="h-4 w-20 rounded-md" />
+        </div>
+      </div>
+    );
   }
 
   if (!isSignedIn) {
@@ -37,10 +47,19 @@ const UserMenu = () => {
   }
 
   return (
-    <div className="relative flex">
-      <UserButton />
-      <div className="absolute top-2 -right-2.5 rounded-full bg-zinc-200 p-0.5 dark:bg-zinc-800">
-        <ChevronDownIcon size={12} />
+    <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-0.5">
+        <UserButton />
+        <ChevronDownIcon
+          size={14}
+          className="rounded-full bg-zinc-300 p-0.5 dark:bg-zinc-700/50"
+        />
+      </div>
+      <div className="flex flex-col space-y-0.5">
+        <p className="max-w-32 truncate text-sm font-medium">{user.fullName}</p>
+        <p className="max-w-32 truncate text-xs font-medium text-zinc-600 dark:text-zinc-400">
+          {user.emailAddresses[0]?.emailAddress}
+        </p>
       </div>
     </div>
   );

@@ -30,7 +30,6 @@ export const collection = createTable("collection", (d) => ({
   createdBy: d.text().notNull(),
   organizationId: d
     .uuid()
-    .notNull()
     .references(() => organization.id, { onDelete: "cascade" }),
 }));
 
@@ -39,7 +38,7 @@ export const reminder = createTable("reminder", (d) => ({
   id: d.uuid().primaryKey(),
   title: d.text().notNull(),
   description: d.text(),
-  date: d.timestamp({ withTimezone: true }),
+  dueDate: d.timestamp({ withTimezone: true }),
   collectionId: d
     .uuid()
     .notNull()

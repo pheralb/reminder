@@ -1,9 +1,6 @@
-import { cn } from "@/utils/cn";
-import { container } from "@/ui/container";
-
 export default function HomePage() {
   return (
-    <div className={cn(container)}>
+    <div>
       <h2>hello</h2>
     </div>
   );

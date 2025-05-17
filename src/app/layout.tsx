@@ -11,8 +11,6 @@ import { fontSans } from "@/fonts";
 // Providers:
 import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
-
-// Layout:
 import SidebarProvider from "@/components/layout/sidebarProvider";
 
 // Metadata:

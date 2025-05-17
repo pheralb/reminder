@@ -14,10 +14,6 @@ import { ExternalLink } from "@/ui/externalLink";
 import { Button, buttonVariants } from "@/ui/button";
 import ShowOrganizations from "../organizations/showOrganizations";
 
-interface SidebarContentProps {
-  isOpen: boolean;
-}
-
 const SidebarItemStyle = cn(
   buttonVariants({
     variant: "outline",
@@ -25,15 +21,14 @@ const SidebarItemStyle = cn(
   "justify-between text-sm",
 );
 
-const SidebarContent = ({ isOpen }: SidebarContentProps) => {
+const SidebarContent = () => {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 h-full",
+        "fixed top-0 left-0 h-full w-56",
         "overflow-x-hidden overflow-y-auto",
         "bg-zinc-100 dark:bg-zinc-800/20",
         "transition-all duration-300 ease-in-out",
-        isOpen ? "w-56" : "w-0",
       )}
     >
       <nav className="flex h-full flex-col px-4 pt-6 pb-5">

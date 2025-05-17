@@ -4,18 +4,20 @@ import { db } from "@/server/db";
 import { desc, eq } from "drizzle-orm";
 
 import { reminder } from "@/server/db/schema";
-import { getCurrentUserId } from "@/server/currentUser";
+import { currentUser } from "@clerk/nextjs/server";
 
 // Get Reminders (by user)
 export const getReminders = async (): Promise<GetReminders[] | null> => {
-  const { userId } = await getCurrentUserId();
-  if (!userId) {
+  const user = await currentUser();
+
+  if (!user) {
     return null;
   }
+
   const reminders = await db
     .select()
     .from(reminder)
-    .where(eq(reminder.createdBy, userId))
+    .where(eq(reminder.createdBy, user.id))
     .orderBy(desc(reminder.createdAt));
 
   return reminders;
@@ -23,15 +25,15 @@ export const getReminders = async (): Promise<GetReminders[] | null> => {
 
 // Insert Reminder
 export const insertReminder = async (data: InsertReminder) => {
-  const { userId } = await getCurrentUserId();
-  if (!userId) {
+  const user = await currentUser();
+  if (!user) {
     return null;
   }
   const newReminder = await db
     .insert(reminder)
     .values({
       ...data,
-      createdBy: userId,
+      createdBy: user.id,
     })
     .returning();
   return newReminder;
@@ -42,8 +44,8 @@ export const updateReminder = async (
   reminderId: InsertReminder["id"],
   data: Partial<InsertReminder>,
 ) => {
-  const { userId } = await getCurrentUserId();
-  if (!userId) {
+  const user = await currentUser();
+  if (!user) {
     return null;
   }
   const updatedReminder = await db
@@ -59,8 +61,8 @@ export const updateReminder = async (
 
 // Delete Reminder
 export const deleteReminder = async (reminderId: InsertReminder["id"]) => {
-  const { userId } = await getCurrentUserId();
-  if (!userId) {
+  const user = await currentUser();
+  if (!user) {
     return null;
   }
   const deletedReminder = await db

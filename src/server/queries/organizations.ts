@@ -5,22 +5,21 @@ import type { GetOrganizations } from "@/server/db/types";
 import { db } from "@/server/db";
 import { desc, eq } from "drizzle-orm";
 import { organization } from "@/server/db/schema";
-import { getCurrentUserId } from "../currentUser";
+import { currentUser } from "@clerk/nextjs/server";
 
 // Get Organizations (by user)
 export const getOrganizations = async (): Promise<
   GetOrganizations[] | null
 > => {
-  const { userId } = await getCurrentUserId();
+  const user = await currentUser();
 
-  if (!userId) {
-    return null;
-  }
+  if (!user) return null;
 
-  const reminders = await db
+  const organizations = await db
     .select()
     .from(organization)
-    .where(eq(organization.createdBy, userId))
+    .where(eq(organization.createdBy, user.id))
     .orderBy(desc(organization.createdAt));
-  return reminders;
+
+  return organizations;
 };

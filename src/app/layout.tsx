@@ -13,7 +13,7 @@ import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
 
 // Layout:
-import Sidebar from "@/components/layout/sidebar";
+import SidebarProvider from "@/components/layout/sidebarProvider";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkCustomProvider>
-            <Sidebar>{children}</Sidebar>
+            <SidebarProvider>{children}</SidebarProvider>
           </ClerkCustomProvider>
         </ThemeProvider>
       </body>

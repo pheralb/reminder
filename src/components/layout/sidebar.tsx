@@ -1,21 +1,18 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
-import SidebarContent from "@/components/layout/sidebarContent";
-import { Button } from "@/ui/button";
-import { SidebarOpenIcon } from "lucide-react";
 
 interface SidebarProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   children: ReactNode;
 }
 
-const Sidebar = ({ children }: SidebarProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+const SidebarClient = ({ children, isOpen, setIsOpen }: SidebarProps) => {
   return (
     <div className={cn("flex h-screen")}>
-      <SidebarContent isOpen={isOpen} />
       <div
         className={cn(
           "relative w-screen",
@@ -33,13 +30,10 @@ const Sidebar = ({ children }: SidebarProps) => {
           )}
           onClick={() => setIsOpen(!isOpen)}
         />
-        <Button onClick={() => setIsOpen(!isOpen)}>
-          <SidebarOpenIcon size={16} />
-        </Button>
         {children}
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default SidebarClient;

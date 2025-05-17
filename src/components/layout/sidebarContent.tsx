@@ -2,15 +2,17 @@ import { cn } from "@/utils/cn";
 import { appConfig } from "@/config";
 
 import Link from "next/link";
-import { ArrowUpRight, SettingsIcon } from "lucide-react";
+import { ArrowUpRight, HouseIcon, SettingsIcon } from "lucide-react";
 
-import GitHub from "@/components/logos/github";
 import UserMenu from "@/components/auth/userMenu";
+import SidebarLink from "@/components/layout/sidebarLink";
 import SettingsModal from "@/components/settings/settingsModal";
 
+import GitHub from "@/ui/logos/github";
 import { Separator } from "@/ui/separator";
 import { ExternalLink } from "@/ui/externalLink";
 import { Button, buttonVariants } from "@/ui/button";
+import ShowOrganizations from "../organizations/showOrganizations";
 
 interface SidebarContentProps {
   isOpen: boolean;
@@ -39,16 +41,30 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
           <div className="flex w-full flex-col">
             <Link
               href="/"
-              className="h-fit w-fit text-xl font-medium tracking-tight"
+              className={cn(
+                "h-fit w-fit",
+                "text-xl font-medium tracking-tight",
+                "hover:text-zinc-700 dark:hover:text-zinc-300",
+                "transition-colors duration-200 ease-in-out",
+              )}
             >
               <span>Reminder</span>
             </Link>
             <Separator className="my-4" />
+            {/* Nav Links */}
+            <nav className="flex flex-col space-y-1.5">
+              <SidebarLink href="/">
+                <HouseIcon size={16} />
+                <span>Home</span>
+              </SidebarLink>
+              <ShowOrganizations />
+            </nav>
           </div>
         </div>
         <section>
           <Separator className="mb-4" />
           <div className="flex flex-col space-y-2">
+            {/* Footer Nav Links */}
             <SettingsModal>
               <Button variant="outline" className="justify-start">
                 <SettingsIcon size={16} />

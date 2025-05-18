@@ -1,3 +1,3 @@
 import { cn } from "@/utils/cn";
 
-export const container = cn("max-w-4xl mx-auto px-4");
+export const container = cn("max-w-4xl w-full mx-auto px-4");

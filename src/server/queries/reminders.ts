@@ -45,7 +45,7 @@ export const updateReminder = async (
   data: Partial<InsertReminder>,
 ) => {
   const user = await currentUser();
-  if (!user) {
+  if (!user || !reminderId) {
     return null;
   }
   const updatedReminder = await db
@@ -62,7 +62,7 @@ export const updateReminder = async (
 // Delete Reminder
 export const deleteReminder = async (reminderId: InsertReminder["id"]) => {
   const user = await currentUser();
-  if (!user) {
+  if (!user || !reminderId) {
     return null;
   }
   const deletedReminder = await db

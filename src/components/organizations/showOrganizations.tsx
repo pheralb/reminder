@@ -1,36 +1,35 @@
-import { Await } from "@/utils/await";
-import { getOrganizations } from "@/server/queries/organizations";
 import { Skeleton } from "@/ui/skeleton";
 
-const ShowOrganizations = async () => {
-  return (
-    <Await
-      promise={getOrganizations()}
-      fallback={<Skeleton className="h-8 w-full" />}
-      errorComponent={<div>Error</div>}
-    >
-      {(data) => {
-        if (!data) {
-          return <div>Inicia sesión</div>;
-        }
+import { useQuery } from "@tanstack/react-query";
+import { SidebarLink } from "@/components/layout/sidebarLink";
+import { getOrganizations } from "@/server/queries/client";
 
-        if (data.length === 0) {
-          return <div>No tienes organizaciones</div>;
-        }
+interface ShowOrganizationsProps {
+  userId: string;
+}
 
-        return (
-          <div className="space-y-2">
-            {data.map((org) => (
-              <div key={org.id} className="rounded border p-2">
-                <p className="font-medium">{org.name}</p>
-                <p className="text-sm text-gray-500">{org.id}</p>
-              </div>
-            ))}
-          </div>
-        );
-      }}
-    </Await>
-  );
+const ShowOrganizations = ({ userId }: ShowOrganizationsProps) => {
+  const { data: organizations } = useQuery({
+    queryKey: ["organizations"],
+    queryFn: () =>
+      getOrganizations({
+        userId,
+      }),
+  });
+
+  if (!organizations) {
+    return <Skeleton className="h-8 w-full" />;
+  }
+
+  if (organizations.length === 0) {
+    return <div>No organizations found</div>;
+  }
+
+  return organizations.map((org) => (
+    <SidebarLink key={org.id} href={`/${org.id}`}>
+      <span>{org.name}</span>
+    </SidebarLink>
+  ));
 };
 
 export default ShowOrganizations;

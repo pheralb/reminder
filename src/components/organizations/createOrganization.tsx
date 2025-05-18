@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { insertOrganization } from "@/server/queries/organizations";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CreateOrganizationProps {
   children: ReactNode;
@@ -40,6 +41,7 @@ const organizationZodSchema = z.object({
 
 const CreateOrganization = (props: CreateOrganizationProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   const form = useForm<InsertOrganization>({
     resolver: zodResolver(organizationZodSchema),
@@ -51,6 +53,9 @@ const CreateOrganization = (props: CreateOrganizationProps) => {
   const handleCreateOrganization = async (data: InsertOrganization) => {
     try {
       await insertOrganization(data);
+      await queryClient.invalidateQueries({
+        queryKey: ["organizations"],
+      });
       form.reset();
       setIsOpen(false);
     } catch (error) {

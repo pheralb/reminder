@@ -1,29 +1,28 @@
+"use client";
+
 import { cn } from "@/utils/cn";
 import { appConfig } from "@/config";
 
 import Link from "next/link";
-import { ArrowUpRight, HouseIcon, SettingsIcon } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { ArrowUpRight, HouseIcon, PlusIcon, SettingsIcon } from "lucide-react";
 
 import UserMenu from "@/components/auth/userMenu";
-import SidebarLink from "@/components/layout/sidebarLink";
 import SettingsModal from "@/components/settings/settingsModal";
 
+import { SidebarLink, SidebarLinkStyle } from "@/components/layout/sidebarLink";
+
 import GitHub from "@/ui/logos/github";
+import { Skeleton } from "@/ui/skeleton";
 import { Separator } from "@/ui/separator";
 import { ExternalLink } from "@/ui/externalLink";
 import { Button, buttonVariants } from "@/ui/button";
 
 import ShowOrganizations from "@/components/organizations/showOrganizations";
-import CreateOrganizationComponent from "@/components/organizations/createOrganization";
-
-const SidebarItemStyle = cn(
-  buttonVariants({
-    variant: "outline",
-  }),
-  "justify-between text-sm",
-);
+import CreateOrganization from "@/components/organizations/createOrganization";
 
 const SidebarContent = () => {
+  const { user, isSignedIn, isLoaded } = useUser();
   return (
     <aside
       className={cn(
@@ -47,22 +46,40 @@ const SidebarContent = () => {
             >
               <span>Reminder</span>
             </Link>
-            <CreateOrganizationComponent>
-              <Button
-                variant="outline"
-                className={cn(SidebarItemStyle, "mt-4", "justify-start")}
-              >
-                <span>Create Organization</span>
-              </Button>
-            </CreateOrganizationComponent>
-            <Separator className="my-4" />
             {/* Nav Links */}
-            <nav className="flex flex-col space-y-1.5">
+            <nav className="mt-5 flex flex-col space-y-1">
               <SidebarLink href="/">
                 <HouseIcon size={16} />
                 <span>Home</span>
               </SidebarLink>
-              <ShowOrganizations />
+              {!isLoaded || !isSignedIn ? (
+                <Skeleton className="h-8 w-full" />
+              ) : (
+                user && (
+                  <CreateOrganization>
+                    <button className={cn(SidebarLinkStyle)}>
+                      <PlusIcon size={16} />
+                      <span>Create Organization</span>
+                    </button>
+                  </CreateOrganization>
+                )
+              )}
+              <Separator className="my-2" />
+              <p className="mt-2 mb-3 text-xs text-zinc-600 dark:text-zinc-400">
+                Organizations
+              </p>
+              {!isLoaded ? (
+                <>
+                  <Skeleton className="mb-1 h-6 w-full" />
+                  <Skeleton className="h-6 w-full" />
+                </>
+              ) : !isSignedIn ? (
+                <div className="text-muted-foreground text-sm">
+                  Inicia sesión para ver tus organizaciones
+                </div>
+              ) : (
+                user && <ShowOrganizations userId={user.id} />
+              )}
             </nav>
           </div>
         </div>
@@ -78,7 +95,12 @@ const SidebarContent = () => {
             </SettingsModal>
             <ExternalLink
               href={appConfig.repositoryUrl}
-              className={SidebarItemStyle}
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                }),
+                "justify-between text-sm",
+              )}
             >
               <div className="flex items-center space-x-2">
                 <GitHub width={16} height={16} />
@@ -92,7 +114,28 @@ const SidebarContent = () => {
                 "overflow-hidden p-2.5 shadow-sm",
               )}
             >
-              <UserMenu />
+              {!isLoaded ? (
+                <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-0.5">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                  </div>
+                  <div className="flex flex-col space-y-0.5">
+                    <Skeleton className="h-4 w-20 rounded-md" />
+                    <Skeleton className="h-4 w-20 rounded-md" />
+                  </div>
+                </div>
+              ) : !isSignedIn ? (
+                <div className="text-muted-foreground text-sm">
+                  Inicia sesión para ver tus organizaciones
+                </div>
+              ) : (
+                user && (
+                  <UserMenu
+                    fullName={user.fullName ?? user.username ?? ""}
+                    emailAddresses={user.emailAddresses[0]?.emailAddress}
+                  />
+                )
+              )}
             </div>
           </div>
         </section>

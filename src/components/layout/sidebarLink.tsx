@@ -11,16 +11,20 @@ interface SidebarLinkProps {
   children: ReactNode;
 }
 
+const SidebarLinkStyle = cn(
+  "cursor-pointer flex w-full items-center space-x-2",
+  "rounded-md px-4 py-1.5 text-sm",
+  "hover:bg-zinc-200 dark:hover:bg-zinc-800",
+  "transition-colors duration-200 ease-in-out",
+);
+
 const SidebarLink = (props: SidebarLinkProps) => {
   const pathname = usePathname();
   return (
     <Link
       href={props.href}
       className={cn(
-        "flex w-full items-center space-x-2",
-        "rounded-md px-4 py-2 text-sm",
-        "hover:bg-zinc-200 dark:hover:bg-zinc-800",
-        "transition-colors duration-200 ease-in-out",
+        SidebarLinkStyle,
         pathname === props.href && "bg-zinc-200 dark:bg-zinc-800",
       )}
     >
@@ -29,4 +33,4 @@ const SidebarLink = (props: SidebarLinkProps) => {
   );
 };
 
-export default SidebarLink;
+export { SidebarLink, SidebarLinkStyle };

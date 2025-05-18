@@ -27,7 +27,9 @@
     "@clerk/nextjs": "6.19.2",
     "@clerk/themes": "2.2.43",
     "@formkit/tempo": "0.1.2",
+    "@hookform/resolvers": "5.0.1",
     "@radix-ui/react-dialog": "1.1.13",
+    "@radix-ui/react-label": "2.1.6",
     "@radix-ui/react-popover": "1.1.13",
     "@radix-ui/react-slot": "1.2.2",
     "@radix-ui/react-tooltip": "1.2.6",
@@ -42,6 +44,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-error-boundary": "6.0.0",
+    "react-hook-form": "7.56.4",
     "tailwind-merge": "3.2.0",
     "zod": "3.24.4"
   },

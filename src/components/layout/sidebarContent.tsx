@@ -12,7 +12,9 @@ import GitHub from "@/ui/logos/github";
 import { Separator } from "@/ui/separator";
 import { ExternalLink } from "@/ui/externalLink";
 import { Button, buttonVariants } from "@/ui/button";
-import ShowOrganizations from "../organizations/showOrganizations";
+
+import ShowOrganizations from "@/components/organizations/showOrganizations";
+import CreateOrganizationComponent from "@/components/organizations/createOrganization";
 
 const SidebarItemStyle = cn(
   buttonVariants({
@@ -45,6 +47,14 @@ const SidebarContent = () => {
             >
               <span>Reminder</span>
             </Link>
+            <CreateOrganizationComponent>
+              <Button
+                variant="outline"
+                className={cn(SidebarItemStyle, "mt-4", "justify-start")}
+              >
+                <span>Create Organization</span>
+              </Button>
+            </CreateOrganizationComponent>
             <Separator className="my-4" />
             {/* Nav Links */}
             <nav className="flex flex-col space-y-1.5">

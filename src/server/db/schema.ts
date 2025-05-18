@@ -7,9 +7,12 @@ export const createTable = pgTableCreator((name) => `reminder_${name}`);
 export const organization = createTable(
   "organization",
   (d) => ({
-    id: d.uuid().primaryKey(),
+    id: d
+      .uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey(),
     name: d.text().notNull(),
-    createdBy: d.text().notNull(),
+    createdBy: d.text(),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -24,10 +27,13 @@ export const organization = createTable(
 
 // Collection table
 export const collection = createTable("collection", (d) => ({
-  id: d.uuid().primaryKey(),
+  id: d
+    .uuid()
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   name: d.text().notNull(),
   colors: d.text(),
-  createdBy: d.text().notNull(),
+  createdBy: d.text(),
   organizationId: d
     .uuid()
     .references(() => organization.id, { onDelete: "cascade" }),
@@ -35,7 +41,10 @@ export const collection = createTable("collection", (d) => ({
 
 // Reminder table
 export const reminder = createTable("reminder", (d) => ({
-  id: d.uuid().primaryKey(),
+  id: d
+    .uuid()
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
   title: d.text().notNull(),
   description: d.text(),
   dueDate: d.timestamp({ withTimezone: true }),
@@ -48,7 +57,7 @@ export const reminder = createTable("reminder", (d) => ({
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
-  createdBy: d.text().notNull(),
+  createdBy: d.text(),
 }));
 
 // Relations

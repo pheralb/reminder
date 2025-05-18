@@ -10,9 +10,9 @@ import {
 import { cn } from "@/utils/cn";
 import { PencilIcon } from "lucide-react";
 
-import { SidebarLinkStyle } from "../layout/sidebarLink";
-import EditOrganization from "./editOrganization";
-import DeleteOrganization from "./deleteOrganization";
+import { SidebarLinkStyle } from "@/components/layout/sidebarLink";
+import EditOrganization from "@/components/organizations/editOrganization";
+import DeleteOrganization from "@/components/organizations/deleteOrganization";
 
 interface OrganizationOptionsProps {
   organization: GetOrganizations;

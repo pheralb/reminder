@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { SidebarLink } from "@/components/layout/sidebarLink";
 import { getOrganizations } from "@/server/queries/client";
 import OrganizationOptions from "@/components/organizations/organizationOptions";
+import { cn } from "@/utils/cn";
 
 interface ShowOrganizationsProps {
   userId: string;
@@ -27,7 +28,13 @@ const ShowOrganizations = ({ userId }: ShowOrganizationsProps) => {
   }
 
   return organizations.map((org) => (
-    <div key={org.id} className="group flex items-center gap-0.5">
+    <div
+      key={org.id}
+      className={cn(
+        "group flex items-center gap-0.5",
+        "animate-in fade-in-30 zoom-in-35",
+      )}
+    >
       <SidebarLink href={`/${org.id}`}>
         <span>{org.name}</span>
       </SidebarLink>

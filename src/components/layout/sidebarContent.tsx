@@ -5,7 +5,14 @@ import { appConfig } from "@/config";
 
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import { ArrowUpRight, HouseIcon, PlusIcon, SettingsIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronRight,
+  FolderPlusIcon,
+  HouseIcon,
+  SettingsIcon,
+  UserIcon,
+} from "lucide-react";
 
 import UserMenu from "@/components/auth/userMenu";
 import SettingsModal from "@/components/settings/settingsModal";
@@ -21,15 +28,21 @@ import { Button, buttonVariants } from "@/ui/button";
 import ShowOrganizations from "@/components/organizations/showOrganizations";
 import CreateOrganization from "@/components/organizations/createOrganization";
 
-const SidebarContent = () => {
+interface SidebarContentProps {
+  isOpen: boolean;
+}
+
+const SidebarContent = ({ isOpen }: SidebarContentProps) => {
   const { user, isSignedIn, isLoaded } = useUser();
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 h-full w-56",
+        "fixed top-0 left-0 h-full",
         "overflow-x-hidden overflow-y-auto",
         "bg-zinc-100 dark:bg-zinc-800/20",
         "transition-all duration-300 ease-in-out",
+        "select-none",
+        isOpen ? "w-60" : "w-0",
       )}
     >
       <nav className="flex h-full flex-col px-4 pt-6 pb-5">
@@ -39,7 +52,7 @@ const SidebarContent = () => {
               href="/"
               className={cn(
                 "h-fit w-fit",
-                "text-xl font-medium tracking-tight",
+                "font-onest text-xl font-medium tracking-tight",
                 "hover:text-zinc-700 dark:hover:text-zinc-300",
                 "transition-colors duration-200 ease-in-out",
               )}
@@ -52,33 +65,35 @@ const SidebarContent = () => {
                 <HouseIcon size={16} />
                 <span>Home</span>
               </SidebarLink>
-              {!isLoaded || !isSignedIn ? (
-                <Skeleton className="h-8 w-full" />
+              {!isLoaded ? (
+                <Skeleton className="h-6 w-full" />
               ) : (
+                isSignedIn &&
                 user && (
                   <CreateOrganization>
                     <button className={cn(SidebarLinkStyle)}>
-                      <PlusIcon size={16} />
+                      <FolderPlusIcon size={16} />
                       <span>Create Organization</span>
                     </button>
                   </CreateOrganization>
                 )
               )}
-              <Separator className="my-2" />
-              <p className="mt-2 mb-3 text-xs text-zinc-600 dark:text-zinc-400">
-                Organizations
-              </p>
               {!isLoaded ? (
                 <>
                   <Skeleton className="mb-1 h-6 w-full" />
                   <Skeleton className="h-6 w-full" />
                 </>
-              ) : !isSignedIn ? (
-                <div className="text-muted-foreground text-sm">
-                  Inicia sesión para ver tus organizaciones
-                </div>
               ) : (
-                user && <ShowOrganizations userId={user.id} />
+                isSignedIn &&
+                user && (
+                  <>
+                    <Separator className="my-2" />
+                    <p className="mt-2 mb-3 text-xs text-zinc-600 dark:text-zinc-400">
+                      Organizations
+                    </p>
+                    <ShowOrganizations userId={user.id} />
+                  </>
+                )
               )}
             </nav>
           </div>
@@ -125,9 +140,28 @@ const SidebarContent = () => {
                   </div>
                 </div>
               ) : !isSignedIn ? (
-                <div className="text-muted-foreground text-sm">
-                  Inicia sesión para ver tus organizaciones
-                </div>
+                <>
+                  <p className="mb-2 text-xs text-zinc-600 dark:text-zinc-400">
+                    Login to your account to save your data and access your data
+                    anywhere
+                  </p>
+                  <Link
+                    href="/sign-in"
+                    className={cn(
+                      buttonVariants({
+                        variant: "outline",
+                        size: "sm",
+                      }),
+                      "w-full justify-between",
+                    )}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <UserIcon size={16} />
+                      <span>Sign in</span>
+                    </div>
+                    <ChevronRight size={14} className="text-zinc-500" />
+                  </Link>
+                </>
               ) : (
                 user && (
                   <UserMenu

@@ -6,7 +6,7 @@ import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 
 // Fonts:
-import { fontSans } from "@/fonts";
+import { fontOnest, fontSans } from "@/fonts";
 
 // Providers:
 import QueryProvider from "@/providers/queryProvider";
@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${fontSans.variable}`,
+          `${fontSans.variable} ${fontOnest.variable}`,
           "font-sans antialiased",
           "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50",
         )}

@@ -9,6 +9,7 @@ import { cn } from "@/utils/cn";
 import { fontSans } from "@/fonts";
 
 // Providers:
+import QueryProvider from "@/providers/queryProvider";
 import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
 import SidebarProvider from "@/components/layout/sidebarProvider";
@@ -39,7 +40,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkCustomProvider>
-            <SidebarProvider>{children}</SidebarProvider>
+            <QueryProvider>
+              <SidebarProvider>{children}</SidebarProvider>
+            </QueryProvider>
           </ClerkCustomProvider>
         </ThemeProvider>
       </body>

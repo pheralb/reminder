@@ -11,6 +11,7 @@ export const fontSans = localFont({
 
 export const fontOnest = Onest({
   variable: "--font-onest",
+  subsets: ["latin"],
   display: "swap",
   weight: "400",
   preload: true,

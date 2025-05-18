@@ -3,6 +3,7 @@ import { Skeleton } from "@/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { SidebarLink } from "@/components/layout/sidebarLink";
 import { getOrganizations } from "@/server/queries/client";
+import OrganizationOptions from "@/components/organizations/organizationOptions";
 
 interface ShowOrganizationsProps {
   userId: string;
@@ -26,9 +27,15 @@ const ShowOrganizations = ({ userId }: ShowOrganizationsProps) => {
   }
 
   return organizations.map((org) => (
-    <SidebarLink key={org.id} href={`/${org.id}`}>
-      <span>{org.name}</span>
-    </SidebarLink>
+    <div key={org.id} className="group flex items-center gap-0.5">
+      <SidebarLink href={`/${org.id}`}>
+        <span>{org.name}</span>
+      </SidebarLink>
+      <OrganizationOptions
+        organization={org}
+        className="group-hover:opacity-100"
+      />
+    </div>
   ));
 };
 

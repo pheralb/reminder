@@ -6,6 +6,7 @@ import { container } from "@/ui/container";
 import { Button } from "@/ui/button";
 import { PlusIcon } from "lucide-react";
 
+import LoadingData from "@/components/loadingData";
 import AppOptions from "@/components/layout/appOptions";
 import ShowCollection from "@/components/collections/showCollection";
 import BlankCollection from "@/components/collections/blankCollection";
@@ -14,7 +15,7 @@ import CreateCollection from "@/components/collections/createCollection";
 
 export default function HomePage() {
   return (
-    <div className={cn(container, "flex flex-col space-y-4")}>
+    <div className={cn(container, "flex flex-col space-y-4 pb-5")}>
       <AppOptions>
         <CreateCollection>
           <Button variant="default">
@@ -26,7 +27,7 @@ export default function HomePage() {
       <CollectionGroup>
         <Await
           promise={getCollectionsWithReminders()}
-          fallback={<div>Loading...</div>}
+          fallback={<LoadingData text="Preparing..." />}
           errorComponent={<div>Error</div>}
         >
           {(data) => {

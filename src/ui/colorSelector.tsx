@@ -3,7 +3,6 @@ import { cn } from "@/utils/cn";
 import { forwardRef, type HTMLAttributes } from "react";
 
 export interface ColorOption {
-  value: string;
   gradient: string;
   name?: string;
 }
@@ -12,13 +11,13 @@ export interface ColorSelectorProps extends HTMLAttributes<HTMLDivElement> {
   options: ColorOption[];
   value?: string | null;
   defaultValue?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (gradient: string) => void;
 }
 
 const ColorSelector = forwardRef<HTMLDivElement, ColorSelectorProps>(
   ({ options, value, onValueChange, className, ...props }, ref) => {
-    const handleColorSelect = (colorValue: string) => {
-      onValueChange?.(colorValue);
+    const handleColorSelect = (gradient: string) => {
+      onValueChange?.(gradient);
     };
 
     return (
@@ -32,17 +31,17 @@ const ColorSelector = forwardRef<HTMLDivElement, ColorSelectorProps>(
       >
         {options.map((color) => (
           <div
-            key={color.value}
+            key={color.gradient}
             className={cn(
               "relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-md transition-all",
               "ring-offset-background hover:scale-105",
-              value === color.value && "ring-ring ring-2 ring-offset-2",
+              value === color.gradient && "ring-ring ring-2 ring-offset-2",
+              color.gradient,
             )}
-            style={{ background: color.gradient }}
-            onClick={() => handleColorSelect(color.value)}
-            title={color.name ?? color.value}
+            onClick={() => handleColorSelect(color.gradient)}
+            title={color.name ?? color.gradient}
           >
-            {value === color.value && (
+            {value === color.gradient && (
               <Check className="h-4 w-4 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]" />
             )}
           </div>

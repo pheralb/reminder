@@ -37,16 +37,22 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 h-full",
+        "fixed top-0 left-0 h-full w-60",
         "overflow-x-hidden overflow-y-auto",
         "bg-zinc-100 dark:bg-zinc-800/20",
         "border-r border-zinc-300 dark:border-zinc-800",
-        "transition-transform duration-300 ease-in-out",
+        "transition-all duration-300 ease-in-out",
         "select-none",
-        isOpen ? "w-60" : "w-0",
+        isOpen ? "translate-x-0" : "-translate-x-full",
       )}
     >
-      <nav className="flex h-full flex-col px-4 pt-6 pb-5">
+      <nav
+        className={cn(
+          "flex h-full flex-col px-4 pt-6 pb-5",
+          isOpen ? "opacity-100" : "opacity-0",
+        )}
+      >
+        {/* Logo */}
         <div className="flex flex-1">
           <div className="flex w-full flex-col">
             <Link

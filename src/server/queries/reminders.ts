@@ -1,3 +1,5 @@
+"use server";
+
 import type { InsertReminder } from "@/server/db/types";
 
 import { db } from "@/server/db";
@@ -5,6 +7,7 @@ import { eq } from "drizzle-orm";
 
 import { reminder } from "@/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 // Insert Reminder
 export const insertReminder = async (data: InsertReminder) => {
@@ -19,6 +22,8 @@ export const insertReminder = async (data: InsertReminder) => {
       createdBy: user.id,
     })
     .returning();
+
+  revalidatePath("/");
   return newReminder;
 };
 
@@ -39,6 +44,8 @@ export const updateReminder = async (
     })
     .where(eq(reminder.id, reminderId))
     .returning();
+
+  revalidatePath("/");
   return updatedReminder;
 };
 
@@ -52,5 +59,7 @@ export const deleteReminder = async (reminderId: InsertReminder["id"]) => {
     .delete(reminder)
     .where(eq(reminder.id, reminderId))
     .returning();
+
+  revalidatePath("/");
   return deletedReminder;
 };

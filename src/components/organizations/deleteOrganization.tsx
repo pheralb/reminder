@@ -13,6 +13,7 @@ import {
 import { Button } from "@/ui/button";
 
 import { deleteOrganization } from "@/server/queries/organizations";
+import { redirect } from "next/navigation";
 
 interface DeleteOrganizationProps {
   title: string;
@@ -31,6 +32,7 @@ const DeleteOrganization = (props: DeleteOrganizationProps) => {
         queryKey: ["organizations"],
       });
       setIsOpen(false);
+      redirect("/");
     } catch (error) {
       console.error("Error updating organization:", error);
     }

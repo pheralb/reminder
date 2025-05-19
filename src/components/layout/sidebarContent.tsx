@@ -103,7 +103,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
           <div className="flex flex-col space-y-2">
             {/* Footer Nav Links */}
             <SettingsModal>
-              <Button variant="outline" className="justify-start">
+              <Button variant="outline" className="justify-start shadow-none">
                 <SettingsIcon size={16} />
                 <span>Settings</span>
               </Button>
@@ -114,7 +114,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
                 buttonVariants({
                   variant: "outline",
                 }),
-                "justify-between text-sm",
+                "justify-between text-sm shadow-none",
               )}
             >
               <div className="flex items-center space-x-2">
@@ -126,7 +126,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
             <div
               className={cn(
                 "rounded-md border border-zinc-200 dark:border-zinc-800",
-                "overflow-hidden p-2.5 shadow-sm",
+                "overflow-hidden p-2.5",
               )}
             >
               {!isLoaded ? (

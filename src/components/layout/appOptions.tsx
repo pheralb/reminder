@@ -1,8 +1,10 @@
+import type { ReactNode } from "react";
+
 import { cn } from "@/utils/cn";
-import CreateCollection from "../collections/createCollection";
 
 interface AppOptionsProps {
   title?: string;
+  children: ReactNode;
 }
 
 const AppOptions = (props: AppOptionsProps) => {
@@ -19,7 +21,7 @@ const AppOptions = (props: AppOptionsProps) => {
       <h2 className="font-onest text-2xl font-medium tracking-tight">
         {props.title ?? "Home"}
       </h2>
-      <CreateCollection />
+      {props.children}
     </div>
   );
 };

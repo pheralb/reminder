@@ -41,7 +41,9 @@ export default function RootLayout({
         >
           <ClerkCustomProvider>
             <QueryProvider>
-              <SidebarProvider>{children}</SidebarProvider>
+              <SidebarProvider>
+                <main>{children}</main>
+              </SidebarProvider>
             </QueryProvider>
           </ClerkCustomProvider>
         </ThemeProvider>

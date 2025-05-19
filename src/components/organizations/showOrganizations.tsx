@@ -5,6 +5,7 @@ import { SidebarLink } from "@/components/layout/sidebarLink";
 import { getOrganizations } from "@/server/queries/client";
 import OrganizationOptions from "@/components/organizations/organizationOptions";
 import { cn } from "@/utils/cn";
+import { Ellipse } from "@/ui/shapes";
 
 interface ShowOrganizationsProps {
   userId: string;
@@ -24,18 +25,25 @@ const ShowOrganizations = ({ userId }: ShowOrganizationsProps) => {
   }
 
   if (organizations.length === 0) {
-    return <div>No organizations found</div>;
+    return (
+      <div className="my-2 flex flex-col items-center justify-center space-y-2">
+        <Ellipse width={32} height={32} />
+        <p className="text-center text-sm text-zinc-500 dark:text-zinc-400">
+          Your organizations will be here
+        </p>
+      </div>
+    );
   }
 
   return organizations.map((org) => (
     <div
-      key={org.id}
+      key={org.slug}
       className={cn(
         "group flex items-center gap-0.5",
         "animate-in fade-in-30 zoom-in-35",
       )}
     >
-      <SidebarLink href={`/${org.id}`}>
+      <SidebarLink href={`/${org.slug}`}>
         <span>{org.name}</span>
       </SidebarLink>
       <OrganizationOptions

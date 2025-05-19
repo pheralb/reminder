@@ -1,7 +1,7 @@
 "use client";
 
 import type { InsertCollection } from "@/server/db/types";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import {
   Dialog,
@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/ui/dialog";
-import { Button, buttonVariants } from "@/ui/button";
 import {
   Form,
   FormControl,
@@ -20,9 +19,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/ui/form";
+import { Button } from "@/ui/button";
 
-import { cn } from "@/utils/cn";
-import { PlusIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -33,10 +31,14 @@ import { ColorSelector } from "@/ui/colorSelector";
 import { colorOptions } from "./colors";
 
 interface CreateCollectionProps {
+  children: ReactNode;
   organizationId?: string;
 }
 
-const CreateCollection = ({ organizationId }: CreateCollectionProps) => {
+const CreateCollection = ({
+  children,
+  organizationId,
+}: CreateCollectionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const form = useForm<InsertCollection>({
     resolver: zodResolver(collectionZodSchema),
@@ -47,7 +49,10 @@ const CreateCollection = ({ organizationId }: CreateCollectionProps) => {
 
   const handleCreateCollection = async (data: InsertCollection) => {
     try {
-      await createCollection(data);
+      await createCollection({
+        ...data,
+        organizationId: organizationId,
+      });
       form.reset();
       setIsOpen(false);
     } catch (error) {
@@ -62,17 +67,7 @@ const CreateCollection = ({ organizationId }: CreateCollectionProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(value) => handleOnClose(value)}>
-      <DialogTrigger
-        className={cn(
-          buttonVariants({
-            variant: "default",
-          }),
-          "rounded-lg",
-        )}
-      >
-        <PlusIcon size={20} strokeWidth={1.5} />
-        <span>Create Collection</span>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New collection</DialogTitle>

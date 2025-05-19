@@ -1,9 +1,9 @@
 "use server";
 
-// This file contains the queries that I can use in client components.
+// 💡 This file contains the queries that I can use in client components.
 // Don't use Clerk/ssr in this file.
 
-import type { GetOrganizations } from "../db/types";
+import type { GetOrganizations } from "@/server/db/types";
 
 import { db } from "@/server/db";
 import { desc, eq } from "drizzle-orm";

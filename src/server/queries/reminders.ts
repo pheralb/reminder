@@ -1,27 +1,10 @@
-import type { GetReminders, InsertReminder } from "@/server/db/types";
+import type { InsertReminder } from "@/server/db/types";
 
 import { db } from "@/server/db";
-import { asc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { reminder } from "@/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
-
-// Get Reminders (by user)
-export const getReminders = async (): Promise<GetReminders[] | null> => {
-  const user = await currentUser();
-
-  if (!user) {
-    return null;
-  }
-
-  const reminders = await db
-    .select()
-    .from(reminder)
-    .where(eq(reminder.createdBy, user.id))
-    .orderBy(asc(reminder.dueDate));
-
-  return reminders;
-};
 
 // Insert Reminder
 export const insertReminder = async (data: InsertReminder) => {

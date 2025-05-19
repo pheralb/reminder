@@ -11,6 +11,7 @@ export const organization = createTable(
       .uuid()
       .default(sql`gen_random_uuid()`)
       .primaryKey(),
+    slug: d.text(),
     name: d.text().notNull(),
     createdBy: d.text(),
     createdAt: d

@@ -10,19 +10,25 @@ import { currentUser } from "@clerk/nextjs/server";
 import { eq, and } from "drizzle-orm";
 
 // Get Collections with reminders (by collectionId and userId)
-export const getCollectionsWithReminders = async () => {
+export const getCollectionsWithReminders = async (orgId?: string) => {
   const user = await currentUser();
 
   if (!user) return null;
 
+  const conditions = [eq(collection.createdBy, user.id)];
+
+  if (orgId) {
+    conditions.push(eq(collection.organizationId, orgId));
+  }
+
   const collections = await db
     .select()
     .from(collection)
-    .where(eq(collection.createdBy, user.id));
+    .where(and(...conditions));
 
   const collectionsWithReminders = await Promise.all(
-    collections.map(async (col: typeof collection.$inferSelect) => {
-      const reminders: (typeof reminder.$inferSelect)[] = await db
+    collections.map(async (col) => {
+      const reminders = await db
         .select()
         .from(reminder)
         .where(
@@ -34,7 +40,7 @@ export const getCollectionsWithReminders = async () => {
 
       return {
         collection: col,
-        reminders: reminders,
+        reminders,
       };
     }),
   );

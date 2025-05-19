@@ -24,20 +24,16 @@ import {
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { insertOrganization } from "@/server/queries/organizations";
+import { organizationZodSchema } from "@/server/schemas/organization";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface CreateOrganizationProps {
   children: ReactNode;
 }
-
-const organizationZodSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-});
 
 const CreateOrganization = (props: CreateOrganizationProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

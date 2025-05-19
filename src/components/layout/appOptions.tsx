@@ -1,7 +1,11 @@
 import { cn } from "@/utils/cn";
 import CreateCollection from "../collections/createCollection";
 
-const AppOptions = () => {
+interface AppOptionsProps {
+  title?: string;
+}
+
+const AppOptions = (props: AppOptionsProps) => {
   return (
     <div
       className={cn(
@@ -12,7 +16,9 @@ const AppOptions = () => {
         "flex w-full items-center justify-between",
       )}
     >
-      <h2 className="font-onest text-2xl font-medium tracking-tight">Today</h2>
+      <h2 className="font-onest text-2xl font-medium tracking-tight">
+        {props.title ?? "Home"}
+      </h2>
       <CreateCollection />
     </div>
   );

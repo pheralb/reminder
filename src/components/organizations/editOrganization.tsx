@@ -28,16 +28,13 @@ import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 
 import { updateOrganization } from "@/server/queries/organizations";
+import { organizationZodSchema } from "@/server/schemas/organization";
 
 interface EditOrganizationProps {
   title: string;
   organizationId: string;
   children: ReactNode;
 }
-
-const organizationZodSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-});
 
 const EditOrganization = (props: EditOrganizationProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

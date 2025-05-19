@@ -146,7 +146,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
                     anywhere
                   </p>
                   <Link
-                    href="/sign-in"
+                    href="/auth"
                     className={cn(
                       buttonVariants({
                         variant: "outline",

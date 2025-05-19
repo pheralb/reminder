@@ -40,7 +40,8 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
         "fixed top-0 left-0 h-full",
         "overflow-x-hidden overflow-y-auto",
         "bg-zinc-100 dark:bg-zinc-800/20",
-        "transition-all duration-300 ease-in-out",
+        "border-r border-zinc-300 dark:border-zinc-800",
+        "transition-transform duration-300 ease-in-out",
         "select-none",
         isOpen ? "w-60" : "w-0",
       )}

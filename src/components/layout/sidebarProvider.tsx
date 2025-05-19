@@ -20,7 +20,7 @@ const SidebarProvider = (props: SidebarProviderProps) => {
       <button
         title="Toggle Sidebar"
         className={cn(
-          "absolute -left-0.5 z-50 h-full w-0.5",
+          "absolute left-0 z-50 h-screen w-1",
           "hover:bg-zinc-400 dark:hover:bg-zinc-600",
           "transition-colors duration-200 ease-in-out",
           "cursor-w-resize",

@@ -13,7 +13,6 @@ const SidebarClient = ({ isOpen, children }: SidebarProps) => {
         className={cn(
           "relative w-screen overflow-y-auto",
           "bg-zinc-50 dark:bg-zinc-900",
-          "border border-zinc-300 dark:border-zinc-800",
           isOpen ? "ml-60" : "ml-0",
         )}
       >

@@ -1,7 +1,6 @@
 "use client";
 
 import type { GetCollections, GetReminders } from "@/server/db/types";
-import { buttonVariants } from "@/ui/button";
 
 import {
   Collapsible,
@@ -10,8 +9,10 @@ import {
 } from "@/ui/collapsible";
 import { Flower } from "@/ui/shapes";
 import { cn } from "@/utils/cn";
-import { ChevronUpIcon, EllipsisIcon } from "lucide-react";
+import { ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
+import CollectionOptions from "./collectionOptions";
+import CreateReminder from "../reminders/createReminder";
 
 interface ShowCollectionProps {
   collection: GetCollections;
@@ -24,13 +25,13 @@ const ShowCollection = ({ collection, reminders }: ShowCollectionProps) => {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div
         className={cn(
-          "flex items-center justify-between gap-2",
+          "flex w-full items-center justify-center",
           "border-b border-zinc-200 pb-1.5 dark:border-zinc-800",
         )}
       >
         <CollapsibleTrigger
           className={cn(
-            "flex w-full cursor-pointer items-center justify-between",
+            "flex w-full cursor-pointer items-center justify-between pr-2",
             "text-zinc-600 dark:text-zinc-400",
             isOpen && "text-zinc-900 dark:text-zinc-50",
             "hover:text-zinc-900 dark:hover:text-zinc-50",
@@ -46,17 +47,12 @@ const ShowCollection = ({ collection, reminders }: ShowCollectionProps) => {
             className={cn("transition-transform", isOpen && "rotate-180")}
           />
         </CollapsibleTrigger>
-        <button
-          className={cn(
-            buttonVariants({
-              variant: "ghost",
-              size: "icon",
-            }),
-            "h-7",
-          )}
-        >
-          <EllipsisIcon size={16} />
-        </button>
+        <CreateReminder
+          collectionId={collection.id || ""}
+          collectionName={collection.name || ""}
+          collectionColor={collection.colors}
+        />
+        <CollectionOptions collection={collection} />
       </div>
       <CollapsibleContent>
         {reminders.length === 0 ? (

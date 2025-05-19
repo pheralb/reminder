@@ -1,80 +1,75 @@
-"use client";
+import type { InsertCollection, InsertOrganization } from "@/server/db/types";
 
-import type { InsertCollection } from "@/server/db/types";
 import { useState, type ReactNode } from "react";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogTrigger,
 } from "@/ui/dialog";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/ui/form";
+import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { createCollection } from "@/server/queries/collections";
 import { collectionZodSchema } from "@/server/schemas/collection";
-import { Input } from "@/ui/input";
+import { editCollection } from "@/server/queries/collections";
 import { ColorSelector } from "@/ui/colorSelector";
 import { colorOptions } from "./colors";
 
-interface CreateCollectionProps {
+interface EditCollectionProps {
+  title: string;
+  colors: string | null;
+  collectionId: string;
   children: ReactNode;
-  organizationId?: string;
 }
 
-const CreateCollection = ({
-  children,
-  organizationId,
-}: CreateCollectionProps) => {
+const EditCollection = (props: EditCollectionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const form = useForm<InsertCollection>({
     resolver: zodResolver(collectionZodSchema),
+    defaultValues: {
+      name: props.title,
+      colors: props.colors,
+    },
   });
 
-  const handleCreateCollection = async (data: InsertCollection) => {
+  const handleUpdateCollection = async (data: InsertCollection) => {
     try {
-      await createCollection({
-        ...data,
-        organizationId: organizationId,
-      });
+      await editCollection(props.collectionId, data);
       form.reset();
       setIsOpen(false);
     } catch (error) {
-      console.error("Error creating collection:", error);
+      console.error("Error updating organization:", error);
     }
   };
 
-  const handleOnClose = (value: boolean) => {
-    setIsOpen(value);
-    form.reset();
-  };
-
   return (
-    <Dialog open={isOpen} onOpenChange={(value) => handleOnClose(value)}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New collection</DialogTitle>
-          <DialogDescription>
-            Create a new collection to organize your reminders.
-          </DialogDescription>
+          <DialogTitle>Edit Organization</DialogTitle>
+          <DialogDescription>{props.title}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleCreateCollection)}
+            onSubmit={form.handleSubmit(handleUpdateCollection)}
             className="space-y-8"
           >
             <FormField
@@ -82,10 +77,13 @@ const CreateCollection = ({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Organization Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="Collection Name" {...field} />
+                    <Input placeholder="shadcn" {...field} />
                   </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -107,16 +105,7 @@ const CreateCollection = ({
                 </FormItem>
               )}
             />
-            <div className="flex items-center justify-end space-x-2">
-              <Button
-                type="button"
-                onClick={() => handleOnClose(false)}
-                variant="outline"
-              >
-                <span>Cancel</span>
-              </Button>
-              <Button type="submit">Create</Button>
-            </div>
+            <Button type="submit">Submit</Button>
           </form>
         </Form>
       </DialogContent>
@@ -124,4 +113,4 @@ const CreateCollection = ({
   );
 };
 
-export default CreateCollection;
+export default EditCollection;

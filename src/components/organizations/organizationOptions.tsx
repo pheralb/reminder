@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { cn } from "@/utils/cn";
-import { PencilIcon } from "lucide-react";
+import { PencilIcon, PencilLineIcon, TrashIcon } from "lucide-react";
 
 import { SidebarLinkStyle } from "@/components/layout/sidebarLink";
 import EditOrganization from "@/components/organizations/editOrganization";
@@ -41,7 +41,8 @@ const OrganizationOptions = (props: OrganizationOptionsProps) => {
           organizationId={props.organization.id}
         >
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            Rename organization
+            <PencilLineIcon size={14} />
+            <span>Rename</span>
           </DropdownMenuItem>
         </EditOrganization>
         <DeleteOrganization
@@ -49,7 +50,8 @@ const OrganizationOptions = (props: OrganizationOptionsProps) => {
           organizationId={props.organization.id}
         >
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            Delete organization
+            <TrashIcon size={14} />
+            <span>Delete</span>
           </DropdownMenuItem>
         </DeleteOrganization>
       </DropdownMenuContent>

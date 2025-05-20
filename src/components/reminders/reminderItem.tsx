@@ -4,6 +4,7 @@ import type { GetReminders } from "@/server/db/types";
 
 import { useState } from "react";
 import { motion } from "motion/react";
+import { format } from "date-fns";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
@@ -141,9 +142,14 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
           </label>
           <EditReminder
             reminderData={reminderData}
-            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out"
+            className="opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
           />
         </div>
+        {reminderData.dueDate && (
+          <span className="text-sm text-zinc-500 dark:text-zinc-400">
+            {format(reminderData.dueDate, "MM/dd/yyyy")}
+          </span>
+        )}
         {reminderData.description && (
           <span className="text-sm text-zinc-500 dark:text-zinc-400">
             {reminderData.description}

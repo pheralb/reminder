@@ -15,7 +15,7 @@ const AppOptions = (props: AppOptionsProps) => {
         "z-50 py-3.5",
         "border-b border-zinc-200 dark:border-zinc-800",
         "bg-zinc-50 dark:bg-zinc-900",
-        "flex w-full items-center justify-between",
+        "flex w-full flex-col justify-between space-y-3 md:flex-row md:items-center md:space-y-0",
       )}
     >
       <h2 className="text-2xl font-semibold tracking-tight">

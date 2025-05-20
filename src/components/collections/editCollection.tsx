@@ -1,10 +1,9 @@
-import type { InsertCollection, InsertOrganization } from "@/server/db/types";
+import type { InsertCollection } from "@/server/db/types";
 
 import { useState, type ReactNode } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
 
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
+  DialogFooter,
 } from "@/ui/dialog";
 import {
   Form,
@@ -30,6 +30,8 @@ import { collectionZodSchema } from "@/server/schemas/collection";
 import { editCollection } from "@/server/queries/collections";
 import { ColorSelector } from "@/ui/colorSelector";
 import { colorOptions } from "./colors";
+import { toast } from "@pheralb/toast";
+import { LoaderIcon, PlusIcon } from "lucide-react";
 
 interface EditCollectionProps {
   title: string;
@@ -40,6 +42,7 @@ interface EditCollectionProps {
 
 const EditCollection = (props: EditCollectionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<InsertCollection>({
     resolver: zodResolver(collectionZodSchema),
@@ -50,13 +53,28 @@ const EditCollection = (props: EditCollectionProps) => {
   });
 
   const handleUpdateCollection = async (data: InsertCollection) => {
+    setLoading(true);
     try {
       await editCollection(props.collectionId, data);
       form.reset();
       setIsOpen(false);
+      setLoading(false);
+      toast.success({
+        text: "Collection edited successfully",
+      });
     } catch (error) {
-      console.error("Error updating organization:", error);
+      console.error("⚠️ editCollection - Error editing collection:", error);
+      toast.error({
+        text: "Failed to edit collection.",
+        description: "Please try again later.",
+      });
+      setLoading(false);
     }
+  };
+
+  const handleOnClose = (value: boolean) => {
+    setIsOpen(value);
+    form.reset();
   };
 
   return (
@@ -105,7 +123,26 @@ const EditCollection = (props: EditCollectionProps) => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <DialogFooter>
+              <Button
+                type="button"
+                onClick={() => handleOnClose(false)}
+                variant="outline"
+              >
+                <span>Cancel</span>
+              </Button>
+              <Button
+                type="submit"
+                disabled={loading || !form.formState.isDirty}
+              >
+                {loading ? (
+                  <LoaderIcon size={16} className="animate-spin" />
+                ) : (
+                  <PlusIcon size={16} />
+                )}
+                <span>{loading ? "Creating..." : "Create"}</span>
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,7 +22,9 @@ import {
 } from "@/ui/form";
 import { Button } from "@/ui/button";
 
+import { toast } from "@pheralb/toast";
 import { useForm } from "react-hook-form";
+import { LoaderIcon, PlusIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createCollection } from "@/server/queries/collections";
@@ -40,11 +43,14 @@ const CreateCollection = ({
   organizationId,
 }: CreateCollectionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm<InsertCollection>({
     resolver: zodResolver(collectionZodSchema),
   });
 
   const handleCreateCollection = async (data: InsertCollection) => {
+    setLoading(true);
     try {
       await createCollection({
         ...data,
@@ -52,8 +58,17 @@ const CreateCollection = ({
       });
       form.reset();
       setIsOpen(false);
+      setLoading(false);
+      toast.success({
+        text: "Collection created successfully",
+      });
     } catch (error) {
-      console.error("Error creating collection:", error);
+      console.error("⚠️ createCollection - Error creating collection:", error);
+      toast.error({
+        text: "Failed to create collection.",
+        description: "Please try again later.",
+      });
+      setLoading(false);
     }
   };
 
@@ -111,7 +126,7 @@ const CreateCollection = ({
                 </FormItem>
               )}
             />
-            <div className="flex items-center justify-end space-x-2">
+            <DialogFooter>
               <Button
                 type="button"
                 onClick={() => handleOnClose(false)}
@@ -119,8 +134,15 @@ const CreateCollection = ({
               >
                 <span>Cancel</span>
               </Button>
-              <Button type="submit">Create</Button>
-            </div>
+              <Button type="submit" disabled={loading}>
+                {loading ? (
+                  <LoaderIcon size={16} className="animate-spin" />
+                ) : (
+                  <PlusIcon size={16} />
+                )}
+                <span>{loading ? "Creating..." : "Create"}</span>
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

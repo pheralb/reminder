@@ -46,12 +46,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <div className={cn(container, "flex flex-col space-y-4 pb-5")}>
       <AppOptions title={orgData.organization.name}>
-        <CreateCollection organizationId={orgData.organization.id || ""}>
-          <Button variant="default">
-            <PlusIcon size={16} />
-            <span>Create Collection</span>
-          </Button>
-        </CreateCollection>
+        {orgData.organization.id && (
+          <CreateCollection organizationId={orgData.organization.id}>
+            <Button variant="default">
+              <PlusIcon size={16} />
+              <span>Create Collection</span>
+            </Button>
+          </CreateCollection>
+        )}
       </AppOptions>
       <CollectionGroup>
         {orgData.collections.length === 0 ? (

@@ -97,8 +97,9 @@ Ready 🚀
 
 **Global**
 
-- [ ] Improve UI/UX for mobile devices (working).
-- [ ] Improve Metadata, add OG Image (working).
+- [ ] Refactor forms. Use one only form for create and update (working).
+- [ ] Improve UI/UX for mobile devices.
+- [ ] Improve Metadata, add OG Image.
 
 **Organizations**
 

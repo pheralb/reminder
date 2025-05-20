@@ -19,6 +19,14 @@
 <span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
 <a href="https://twitter.com/pheralb_">X/Twitter</a>
 
+![Next.js Badge](https://img.shields.io/badge/Next.js&nbsp;15-000?logo=nextdotjs&logoColor=fff&style=flat)
+![Clerk Badge](https://img.shields.io/badge/Clerk-6C47FF?logo=clerk&logoColor=fff&style=flat-square)
+![Drizzle Badge](https://img.shields.io/badge/Drizzle-C5F74F?logo=drizzle&logoColor=000&style=flat)
+![React Query Badge](https://img.shields.io/badge/React%20Query-FF4154?logo=reactquery&logoColor=fff&style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/pheralb/reminder)
+![GitHub issues](https://img.shields.io/github/issues/pheralb/reminder)
+![GitHub license](https://img.shields.io/github/license/pheralb/reminder)
+
 </div>
 
 ## ✨ Introduction
@@ -128,4 +136,4 @@ This project is built with the [**T3 Stack**](https://create.t3.gg/) and uses th
 
 ## 📜 License
 
-This project is licensed under the [MIT License](https://github.com/pheralb/reminder/blob/main/LICENSE).
+This project is licensed under the [Apache 2.0 License](https://github.com/pheralb/reminder/blob/main/LICENSE).

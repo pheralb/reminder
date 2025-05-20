@@ -49,6 +49,7 @@ export const reminder = createTable("reminder", (d) => ({
   title: d.text().notNull(),
   description: d.text(),
   dueDate: d.timestamp({ withTimezone: true }),
+  isCompleted: d.boolean().default(false),
   collectionId: d
     .uuid()
     .references(() => collection.id, { onDelete: "cascade" }),

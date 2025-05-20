@@ -13,6 +13,7 @@ import { ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
 import CollectionOptions from "./collectionOptions";
 import CreateReminder from "../reminders/createReminder";
+import ReminderItem from "../reminders/reminderItem";
 
 interface ShowCollectionProps {
   collection: GetCollections;
@@ -63,14 +64,9 @@ const ShowCollection = ({ collection, reminders }: ShowCollectionProps) => {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 mt-4">
             {reminders.map((reminder) => (
-              <div
-                key={reminder.id}
-                className="flex items-center justify-between border-b border-zinc-200 p-2 dark:border-zinc-800"
-              >
-                <span>{reminder.title}</span>
-              </div>
+              <ReminderItem reminderData={reminder} key={reminder.id} />
             ))}
           </div>
         )}

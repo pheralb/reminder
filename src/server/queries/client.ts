@@ -6,8 +6,8 @@
 import type { GetOrganizations } from "@/server/db/types";
 
 import { db } from "@/server/db";
-import { desc, eq } from "drizzle-orm";
-import { organization } from "@/server/db/schema";
+import { and, desc, eq } from "drizzle-orm";
+import { organization, reminder } from "@/server/db/schema";
 
 export const getOrganizations = async ({
   userId,
@@ -21,4 +21,22 @@ export const getOrganizations = async ({
     .orderBy(desc(organization.createdAt));
 
   return organizations;
+};
+
+export const updateReminderStatus = async ({
+  id,
+  isCompleted,
+  createdBy,
+}: {
+  id: string;
+  isCompleted: boolean;
+  createdBy: string;
+}) => {
+  const reminderData = await db
+    .update(reminder)
+    .set({ isCompleted })
+    // and createdBy the user
+    .where(and(eq(reminder.id, id), eq(reminder.createdBy, createdBy)))
+    .returning();
+  return reminderData;
 };

@@ -7,7 +7,7 @@ import { collection, reminder } from "@/server/db/schema";
 
 import { revalidatePath } from "next/cache";
 import { currentUser } from "@clerk/nextjs/server";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 
 // Get Collections with reminders (by collectionId and userId)
 export const getCollectionsWithReminders = async (orgId?: string) => {
@@ -24,7 +24,8 @@ export const getCollectionsWithReminders = async (orgId?: string) => {
   const collections = await db
     .select()
     .from(collection)
-    .where(and(...conditions));
+    .where(and(...conditions))
+    .orderBy(desc(collection.createdAt));
 
   const collectionsWithReminders = await Promise.all(
     collections.map(async (col) => {

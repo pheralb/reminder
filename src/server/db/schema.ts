@@ -35,6 +35,10 @@ export const collection = createTable("collection", (d) => ({
   name: d.text().notNull(),
   colors: d.text(),
   createdBy: d.text(),
+  createdAt: d
+    .timestamp({ withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   organizationId: d
     .uuid()
     .references(() => organization.id, { onDelete: "cascade" }),

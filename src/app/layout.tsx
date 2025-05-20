@@ -28,7 +28,10 @@ export const metadata: Metadata = {
     default: `${appConfig.title} - ${appConfig.description}`,
     template: `%s - ${appConfig.title}`,
   },
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [
+    { rel: "icon", url: "/logo_ico.ico" },
+    { rel: "icon", url: "/logo_svg.svg", type: "image/svg+xml" },
+  ],
 };
 
 export default function RootLayout({

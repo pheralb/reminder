@@ -43,8 +43,8 @@ const ShowOrganizations = ({ userId }: ShowOrganizationsProps) => {
         "animate-in fill-mode-backwards fade-in slide-in-from-bottom-2 duration-200",
       )}
     >
-      <SidebarLink href={`/${org.slug}`}>
-        <span>{org.name}</span>
+      <SidebarLink href={`/${org.slug}`} title={org.name}>
+        <p className="max-w-32 truncate">{org.name}</p>
       </SidebarLink>
       <OrganizationOptions
         organization={org}

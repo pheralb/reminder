@@ -16,6 +16,7 @@ import CreditsFooter from "@/components/credits";
 import QueryProvider from "@/providers/queryProvider";
 import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
+import ToasterNextTheme from "@/providers/toastProvider";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({
             <QueryProvider>{children}</QueryProvider>
             <CreditsFooter />
           </ClerkCustomProvider>
+          <ToasterNextTheme />
         </ThemeProvider>
       </body>
     </html>

@@ -11,7 +11,7 @@
   --font-sans:
     var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-instrument-sans:
-    var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+  --font-onest:
+    var(--font-onest), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }

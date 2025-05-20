@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Instrument_Serif } from "next/font/google";
+import { Onest } from "next/font/google";
 
 export const fontSans = localFont({
   variable: "--font-sans",
@@ -9,8 +9,9 @@ export const fontSans = localFont({
   preload: true,
 });
 
-export const instrumentSans = Instrument_Serif({
-  variable: "--font-instrument-sans",
+export const fontOnest = Onest({
+  variable: "--font-onest",
+  subsets: ["latin"],
   display: "swap",
   weight: "400",
   preload: true,

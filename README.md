@@ -1,29 +1,140 @@
-# Create T3 App
+<div align="center">
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+<a href="https://reminder.pheralb.dev">
+    <img
+        src="./public/screenshot.png"
+        alt="Reminder App Screenshot"
+    />
+</a>
 
-## What's next? How do I make an app with this?
+<p></p>
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+<a href="https://reminder.pheralb.dev">Explore</a>
+<span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
+<a href="#-roadmap">Roadmap</a>
+<span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
+<a href="#-getting-started">Contribute/Self Hosted</a>
+<span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
+<a href="https://github.com/pheralb/reminder/issues/new/choose">Create issue</a>
+<span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
+<a href="https://twitter.com/pheralb_">X/Twitter</a>
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+![Next.js Badge](https://img.shields.io/badge/Next.js&nbsp;15-000?logo=nextdotjs&logoColor=fff&style=flat)
+![Clerk Badge](https://img.shields.io/badge/Clerk-6C47FF?logo=clerk&logoColor=fff&style=flat-square)
+![Drizzle Badge](https://img.shields.io/badge/Drizzle-C5F74F?logo=drizzle&logoColor=000&style=flat)
+![React Query Badge](https://img.shields.io/badge/React%20Query-FF4154?logo=reactquery&logoColor=fff&style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/pheralb/reminder)
+![GitHub issues](https://img.shields.io/github/issues/pheralb/reminder)
+![GitHub license](https://img.shields.io/github/license/pheralb/reminder)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+</div>
 
-## Learn More
+## ✨ Introduction
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+[**Reminder**](https://reminder.pheralb.dev) is a minimalist and intuitive to-do list app that helps you stay organized without distractions. Easily create organizations, group tasks into collections, and set reminders — all for **free**.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Designed with a clean and minimal interface and a smart structure, Reminder is perfect for creators, professionals, and anyone looking to get things done.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## 🚀 Getting Started
 
-## How do I deploy this?
+To run this project locally, follow these steps:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone or [**fork**](https://github.com/pheralb/reminder/fork) the repository:
+
+```bash
+git clone git@github.com:pheralb/reminder.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd reminder
+```
+
+3. Install the dependencies:
+
+```bash
+# Install pnpm if you don't have it:
+npm install -g pnpm
+
+# Install the dependencies:
+pnpm install
+```
+
+4. Create a `.env` file in the root directory and add your environment variables:
+
+- `DATABASE_URL`: Your **PostgreSQL** database URL. You can use [Railway](https://railway.app/) or [Neon](https://neon.tech/) to create a free PostgreSQL database.
+- `CLERK_SECRET_KEY` & `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk secret key. You can create a free account on [Clerk](https://clerk.dev/) and get your secret key from the dashboard.
+- `NEXT_PUBLIC_CLERK_**_URL`: The URL to redirect users after sign-in and sign-up.
+
+```bash
+# DATABASE URL:
+DATABASE_URL=""
+
+# CLERK:
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=
+```
+
+5. Push the `reminder_` tables to your database:
+
+```bash
+pnpm db push
+```
+
+6. Start the development server:
+
+```bash
+pnpm dev
+```
+
+Ready 🚀
+
+## 🔭 Roadmap
+
+**Global**
+
+- [ ] Refactor forms. Use one only form for create and update (working).
+- [ ] Improve UI/UX for mobile devices.
+- [ ] Improve Metadata, add OG Image.
+
+**Organizations**
+
+- [x] Get a list of organizations.
+- [x] Insert a new organization.
+- [x] Delete an organization.
+- [x] Update an organization.
+- [x] Go to organization page.
+
+**Collections**
+
+- [x] Get a list of collections.
+- [x] Insert a new collection.
+- [x] Delete a collection.
+- [x] Update a collection.
+
+**Reminders**
+
+- [x] Get a list of reminders in a collection.
+- [x] Insert a new reminders in a collection.
+- [x] Update an reminders in a collection.
+
+## 📦 Stack
+
+This project is built with the [**T3 Stack**](https://create.t3.gg/) and uses the following technologies:
+
+- [Next.js](https://nextjs.org/) - The React framework for production.
+- [Clerk](https://clerk.dev/) - Authentication and user management.
+- [Drizzle](https://orm.drizzle.team/) - TypeScript ORM for PostgreSQL.
+- [PostgreSQL](https://www.postgresql.org/) - The world's most advanced open source relational database.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapid UI development.
+- [shadcn/ui](https://ui.shadcn.com/) - A set of components built with Tailwind CSS and Radix UI.
+- [Tanstack Query](https://tanstack.com/query/v4) - A powerful data-fetching library for React.
+- [Zod](https://zod.dev/) - A TypeScript-first schema declaration and validation library.
+
+## 📜 License
+
+This project is licensed under the [Apache 2.0 License](https://github.com/pheralb/reminder/blob/main/LICENSE).

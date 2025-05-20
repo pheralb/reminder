@@ -15,4 +15,4 @@ const ExternalLink = (props: ComponentProps<"a">) => {
   );
 };
 
-export default ExternalLink;
+export { ExternalLink };

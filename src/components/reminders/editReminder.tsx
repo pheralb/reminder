@@ -1,10 +1,9 @@
-import type { InsertReminder } from "@/server/db/types";
+import type { GetReminders, InsertReminder } from "@/server/db/types";
 import { useState } from "react";
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -17,59 +16,52 @@ import {
   FormLabel,
   FormMessage,
 } from "@/ui/form";
-import { Button, buttonVariants } from "@/ui/button";
+import { Button } from "@/ui/button";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Textarea } from "@/ui/input";
-import { insertReminder } from "@/server/queries/reminders";
-import { reminderZodSchema } from "@/server/schemas/reminder";
 import { cn } from "@/utils/cn";
-import { CornerDownRightIcon, PlusIcon } from "lucide-react";
+import { updateReminder } from "@/server/queries/reminders";
+import { reminderZodSchema } from "@/server/schemas/reminder";
+import { LoaderIcon, PencilIcon, SaveIcon } from "lucide-react";
+import { Textarea } from "@/ui/input";
 import { toast } from "@pheralb/toast";
 
-interface CreateReminderProps {
-  collectionName: string;
-  collectionColor: string | null;
-  collectionId: string;
+interface EditReminderProps {
+  reminderData: GetReminders;
+  className?: string;
 }
 
-const CreateReminder = ({
-  collectionName,
-  collectionColor,
-  collectionId,
-}: CreateReminderProps) => {
+const EditReminder = ({ reminderData, className }: EditReminderProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<InsertReminder>({
     resolver: zodResolver(reminderZodSchema),
     defaultValues: {
-      collectionId: collectionId,
+      collectionId: reminderData.collectionId,
+      title: reminderData.title,
     },
   });
 
-  const handleCreateReminder = async (data: InsertReminder) => {
+  const handleEditReminder = async (data: InsertReminder) => {
     setIsLoading(true);
     try {
-      await insertReminder({
+      await updateReminder(reminderData.id, {
         ...data,
-        collectionId: collectionId,
+        collectionId: reminderData.collectionId,
       });
       form.reset();
       setIsOpen(false);
       setIsLoading(false);
       toast.success({
-        text: "Reminder created successfully",
+        text: "Reminder updated successfully.",
       });
     } catch (error) {
-      console.error(
-        "⚠️ createReminder - Error creating reminder:",
-        error,
-      );
+      console.error("⚠️ editReminder - Error editing reminder:", error);
       toast.error({
-        text: "Failed to create reminder",
+        text: "Failed to edit reminder.",
         description: "Please try again later.",
       });
       setIsLoading(false);
@@ -84,35 +76,25 @@ const CreateReminder = ({
   return (
     <Dialog open={isOpen} onOpenChange={(value) => handleOnClose(value)}>
       <DialogTrigger
-        title="Add a new reminder"
+        title="Edit reminder"
         className={cn(
-          buttonVariants({
-            variant: "ghost",
-            size: "icon",
-          }),
-          "h-7",
+          "text-zinc-600 dark:text-zinc-400",
+          "hover:text-zinc-900 dark:hover:text-zinc-50",
+          "transition-colors duration-100 ease-in-out",
+          className,
         )}
       >
-        <PlusIcon size={16} />
+        <PencilIcon size={12} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex items-center space-x-1.5">
-            {collectionColor && (
-              <div
-                className={cn(collectionColor, "h-4 w-4 rounded-full", "mr-2")}
-              />
-            )}
-            <span>New Reminder</span>
+            <span>Edit Reminder</span>
           </DialogTitle>
-          <DialogDescription className="flex items-center space-x-1.5">
-            <CornerDownRightIcon size={16} />
-            <span>{collectionName}</span>
-          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleCreateReminder)}
+            onSubmit={form.handleSubmit(handleEditReminder)}
             className="space-y-8"
           >
             <FormField
@@ -140,9 +122,16 @@ const CreateReminder = ({
               >
                 <span>Cancel</span>
               </Button>
-              <Button type="submit" disabled={isLoading}>
-                <PlusIcon size={16} />
-                <span>Create</span>
+              <Button
+                type="submit"
+                disabled={isLoading || !form.formState.isDirty}
+              >
+                {isLoading ? (
+                  <LoaderIcon className="animate-spin" size={16} />
+                ) : (
+                  <SaveIcon size={16} />
+                )}
+                <span>{isLoading ? "Editing..." : "Edit"}</span>
               </Button>
             </div>
           </form>
@@ -152,4 +141,4 @@ const CreateReminder = ({
   );
 };
 
-export default CreateReminder;
+export default EditReminder;

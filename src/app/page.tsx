@@ -54,7 +54,7 @@ const HomePage = () => {
                     variant: "default",
                     size: "lg",
                   }),
-                  "py-6 text-lg",
+                  "py-6",
                 )}
               >
                 <span>Get Started</span>

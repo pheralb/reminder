@@ -40,7 +40,9 @@ const ShowCollection = ({ collection, reminders }: ShowCollectionProps) => {
           )}
         >
           <div className="flex items-center space-x-2">
-            <div className={cn(collection.colors, "h-4 w-4 rounded-full")} />
+            {collection.colors && (
+              <div className={cn(collection.colors, "h-4 w-4 rounded-full")} />
+            )}
             <span>{collection.name}</span>
           </div>
           <ChevronUpIcon
@@ -64,7 +66,7 @@ const ShowCollection = ({ collection, reminders }: ShowCollectionProps) => {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col space-y-2 mt-4">
+          <div className="mt-4 flex flex-col space-y-2">
             {reminders.map((reminder) => (
               <ReminderItem reminderData={reminder} key={reminder.id} />
             ))}

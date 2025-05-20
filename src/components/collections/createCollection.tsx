@@ -84,7 +84,11 @@ const CreateCollection = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Collection Name" {...field} />
+                    <Input
+                      placeholder="Collection Name"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

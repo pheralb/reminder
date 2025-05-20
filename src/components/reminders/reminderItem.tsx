@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { updateReminderStatus } from "@/server/queries/client";
 import { cn } from "@/utils/cn";
+import EditReminder from "./editReminder";
 
 type Reminder = GetReminders;
 
@@ -66,7 +67,7 @@ const Checkbox = ({ reminderId, checked, onCheckedChange }: CheckboxProps) => {
         "cursor-pointer",
         "flex h-4 w-4 flex-shrink-0 appearance-none items-center justify-center rounded outline-none",
         "bg-zinc-100 dark:bg-zinc-900",
-        "border border-zinc-300 dark:border-zinc-800",
+        "border border-zinc-400 dark:border-zinc-700",
         "transition-colors ease-in-out hover:border-zinc-400 dark:hover:border-zinc-600",
       )}
     >
@@ -131,12 +132,18 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
         onCheckedChange={mutation.mutate}
       />
       <div className="grid gap-1.5">
-        <label
-          htmlFor={reminderData.id}
-          className="text-sm leading-none font-medium text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white"
-        >
-          {reminderData.title}
-        </label>
+        <div className="group flex w-full items-center space-x-3">
+          <label
+            htmlFor={reminderData.id}
+            className="text-sm leading-none font-medium text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white"
+          >
+            {reminderData.title}
+          </label>
+          <EditReminder
+            reminderData={reminderData}
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out"
+          />
+        </div>
         {reminderData.description && (
           <span className="text-sm text-zinc-500 dark:text-zinc-400">
             {reminderData.description}

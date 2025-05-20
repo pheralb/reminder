@@ -7,7 +7,7 @@ import { ArrowUpRightIcon, SparklesIcon } from "lucide-react";
 
 const CreditsFooter = () => {
   return (
-    <footer className={cn("absolute right-4 bottom-4")}>
+    <footer className={cn("absolute right-5 bottom-4")}>
       <div className="flex items-center space-x-2">
         <ExternalLink
           href="https://github.com/midudev/hackaton-clerk-2025"
@@ -16,7 +16,7 @@ const CreditsFooter = () => {
               variant: "outline",
               size: "sm",
             }),
-            "cursor-pointer",
+            "cursor-pointer backdrop-blur-md",
           )}
         >
           <Clerk width={14} height={14} />
@@ -30,7 +30,7 @@ const CreditsFooter = () => {
               variant: "outline",
               size: "sm",
             }),
-            "cursor-pointer",
+            "cursor-pointer backdrop-blur-md",
           )}
         >
           <SparklesIcon width={14} height={14} />

@@ -92,7 +92,7 @@ const CreateOrganization = (props: CreateOrganizationProps) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleCreateOrganization)}
-            className="my-2 space-y-8"
+            className="my-2 space-y-6"
           >
             <FormField
               control={form.control}

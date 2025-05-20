@@ -114,7 +114,10 @@ const EditOrganization = (props: EditOrganizationProps) => {
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isLoading}>
+              <Button
+                type="submit"
+                disabled={isLoading || !form.formState.isDirty}
+              >
                 {isLoading ? (
                   <LoaderIcon className="animate-spin" size={16} />
                 ) : (

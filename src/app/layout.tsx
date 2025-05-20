@@ -8,11 +8,11 @@ import { cn } from "@/utils/cn";
 // Fonts:
 import { fontOnest, fontSans } from "@/fonts";
 
-// Providers:
+// Global layout & providers:
 import QueryProvider from "@/providers/queryProvider";
 import { ThemeProvider } from "@/providers/themeProvider";
 import ClerkCustomProvider from "@/providers/clerkProvider";
-import SidebarProvider from "@/components/layout/sidebarProvider";
+import CreditsFooter from "@/components/credits";
 
 // Metadata:
 export const metadata: Metadata = {
@@ -40,11 +40,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkCustomProvider>
-            <QueryProvider>
-              <SidebarProvider>
-                <main>{children}</main>
-              </SidebarProvider>
-            </QueryProvider>
+            <QueryProvider>{children}</QueryProvider>
+            <CreditsFooter />
           </ClerkCustomProvider>
         </ThemeProvider>
       </body>

@@ -32,7 +32,7 @@ const DeleteOrganization = (props: DeleteOrganizationProps) => {
         queryKey: ["organizations"],
       });
       setIsOpen(false);
-      redirect("/");
+      redirect("/app");
     } catch (error) {
       console.error("Error updating organization:", error);
     }

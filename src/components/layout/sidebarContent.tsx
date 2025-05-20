@@ -56,7 +56,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
         <div className="flex flex-1">
           <div className="flex w-full flex-col">
             <Link
-              href="/"
+              href="/app"
               className={cn(
                 "h-fit w-fit",
                 "font-onest text-xl font-medium tracking-tight",
@@ -68,7 +68,7 @@ const SidebarContent = ({ isOpen }: SidebarContentProps) => {
             </Link>
             {/* Nav Links */}
             <nav className="mt-5 flex flex-col space-y-1">
-              <SidebarLink href="/">
+              <SidebarLink href="/app">
                 <HouseIcon size={16} />
                 <span>Home</span>
               </SidebarLink>

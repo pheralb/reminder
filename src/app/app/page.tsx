@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { Await } from "@/utils/await";
 import { getCollectionsWithReminders } from "@/server/queries/collections";
 
@@ -13,7 +15,11 @@ import BlankCollection from "@/components/collections/blankCollection";
 import CollectionGroup from "@/components/collections/collectionGroup";
 import CreateCollection from "@/components/collections/createCollection";
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  title: "Home",
+};
+
+export default function AppHomepage() {
   return (
     <div className={cn(container, "flex flex-col space-y-4 pb-5")}>
       <AppOptions>

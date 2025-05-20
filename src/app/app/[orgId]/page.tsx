@@ -12,6 +12,7 @@ import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/ui/button";
 import { container } from "@/ui/container";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{
@@ -19,12 +20,27 @@ interface PageProps {
   }>;
 }
 
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata | null> {
+  const { orgId } = await params;
+  const orgData = await getOrganizationInfo(orgId);
+
+  if (!orgData?.organization) {
+    return null;
+  }
+
+  return {
+    title: orgData.organization.name,
+  };
+}
+
 export default async function Page({ params }: PageProps) {
   const { orgId } = await params;
   const orgData = await getOrganizationInfo(orgId);
 
   if (!orgData?.organization) {
-    return redirect("/");
+    return redirect("/app");
   }
 
   return (

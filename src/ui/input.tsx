@@ -12,6 +12,7 @@ function Input({ className, type, ...props }: ComponentProps<"input">) {
     <input
       type={type}
       data-slot="input"
+      autoComplete="off"
       className={cn(inputStyles, className)}
       {...props}
     />

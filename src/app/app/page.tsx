@@ -39,7 +39,13 @@ export default function AppHomepage() {
           {(data) => {
             if (data) {
               if (data.length === 0) {
-                return <BlankCollection />;
+                return (
+                  <BlankCollection>
+                    <CreateCollection>
+                      <Button variant="outline">Create</Button>
+                    </CreateCollection>
+                  </BlankCollection>
+                );
               }
               return (
                 <>

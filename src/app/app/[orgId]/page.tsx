@@ -57,7 +57,11 @@ export default async function Page({ params }: PageProps) {
       </AppOptions>
       <CollectionGroup>
         {orgData.collections.length === 0 ? (
-          <BlankCollection />
+          <BlankCollection>
+            <CreateCollection organizationId={orgData.organization.id}>
+              <Button variant="outline">Create</Button>
+            </CreateCollection>
+          </BlankCollection>
         ) : (
           orgData.collections.map((coll) => (
             <ShowCollection

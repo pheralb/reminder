@@ -2,10 +2,11 @@ import type { InsertOrganization } from "@/server/db/types";
 
 import { useState, type ReactNode } from "react";
 
-import { z } from "zod";
+import { toast } from "@pheralb/toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
+import { LoaderIcon, PencilLineIcon } from "lucide-react";
 
 import {
   Dialog,
@@ -14,11 +15,11 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
+  DialogFooter,
 } from "@/ui/dialog";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,6 +39,7 @@ interface EditOrganizationProps {
 
 const EditOrganization = (props: EditOrganizationProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const form = useForm<InsertOrganization>({
@@ -48,6 +50,7 @@ const EditOrganization = (props: EditOrganizationProps) => {
   });
 
   const handleUpdateOrganization = async (data: InsertOrganization) => {
+    setIsLoading(true);
     try {
       await updateOrganization(props.organizationId, data);
       await queryClient.invalidateQueries({
@@ -55,13 +58,30 @@ const EditOrganization = (props: EditOrganizationProps) => {
       });
       form.reset();
       setIsOpen(false);
+      toast.success({
+        text: "Organization created successfully",
+      });
     } catch (error) {
-      console.error("Error updating organization:", error);
+      console.error(
+        "⚠️ updateOrganization - Error updating organization:",
+        error,
+      );
+      toast.error({
+        text: "Failed to update organization",
+        description: "Please try again later.",
+      });
+    }
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      form.reset();
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -80,16 +100,29 @@ const EditOrganization = (props: EditOrganizationProps) => {
                 <FormItem>
                   <FormLabel>Organization Name:</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder={props.title} {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? (
+                  <LoaderIcon className="animate-spin" size={16} />
+                ) : (
+                  <PencilLineIcon size={16} />
+                )}
+                <span>{isLoading ? "Editing..." : "Edit"}</span>
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

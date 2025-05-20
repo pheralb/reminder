@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 
 interface SidebarLinkProps {
   href: string;
+  title?: string;
   children: ReactNode;
 }
 
@@ -22,6 +23,7 @@ const SidebarLink = (props: SidebarLinkProps) => {
   const pathname = usePathname();
   return (
     <Link
+      title={props.title}
       href={props.href}
       className={cn(
         SidebarLinkStyle,

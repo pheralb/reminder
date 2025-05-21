@@ -78,7 +78,7 @@ const EditReminder = ({ reminderData, className }: EditReminderProps) => {
       <DialogTrigger
         title="Edit reminder"
         className={cn(
-          "text-zinc-600 dark:text-zinc-400",
+          "text-zinc-700 dark:text-zinc-300",
           "hover:text-zinc-900 dark:hover:text-zinc-50",
           "transition-colors duration-100 ease-in-out",
           className,

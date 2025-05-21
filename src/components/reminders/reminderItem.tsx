@@ -7,10 +7,12 @@ import { motion } from "motion/react";
 import { format } from "date-fns";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { cn } from "@/utils/cn";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { updateReminderStatus } from "@/server/queries/client";
-import { cn } from "@/utils/cn";
-import EditReminder from "./editReminder";
+
+import EditReminder from "@/components/reminders/editReminder";
+import DeleteReminder from "@/components/reminders/deleteReminder";
 
 type Reminder = GetReminders;
 
@@ -132,18 +134,21 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
         checked={optimisticIsCompleted ?? false}
         onCheckedChange={mutation.mutate}
       />
-      <div className="grid gap-1.5">
-        <div className="group flex w-full items-center space-x-3">
+      <div className="group grid gap-1.5">
+        <div className="flex w-full items-center space-x-3">
           <label
             htmlFor={reminderData.id}
             className="text-sm leading-none font-medium text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white"
           >
             {reminderData.title}
           </label>
-          <EditReminder
-            reminderData={reminderData}
-            className="opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100"
-          />
+          <div className="flex items-center space-x-2.5 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+            <EditReminder reminderData={reminderData} />
+            <DeleteReminder
+              reminderId={reminderData.id}
+              title={reminderData.title}
+            />
+          </div>
         </div>
         {reminderData.dueDate && (
           <span className="text-sm text-zinc-500 dark:text-zinc-400">

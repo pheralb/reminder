@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
   return (
-    <header className="sticky top-0 flex w-full items-center px-4 py-3">
+    <header className="sticky top-0 z-50 flex w-full items-center px-4 py-3">
       <Button
         size="icon"
         variant="ghost"

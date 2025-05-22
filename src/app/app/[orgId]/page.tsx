@@ -44,7 +44,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <div className={cn(container, "flex flex-col space-y-4 pb-5")}>
+    <div className="flex flex-col pb-5">
       <AppOptions title={orgData.organization.name}>
         {orgData.organization.id && (
           <CreateCollection organizationId={orgData.organization.id}>
@@ -55,23 +55,25 @@ export default async function Page({ params }: PageProps) {
           </CreateCollection>
         )}
       </AppOptions>
-      <CollectionGroup>
-        {orgData.collections.length === 0 ? (
-          <BlankCollection>
-            <CreateCollection organizationId={orgData.organization.id}>
-              <Button variant="outline">Create</Button>
-            </CreateCollection>
-          </BlankCollection>
-        ) : (
-          orgData.collections.map((coll) => (
-            <ShowCollection
-              key={coll.id}
-              collection={coll}
-              reminders={coll.reminders}
-            />
-          ))
-        )}
-      </CollectionGroup>
+      <main className={cn(container, "mt-6")}>
+        <CollectionGroup>
+          {orgData.collections.length === 0 ? (
+            <BlankCollection>
+              <CreateCollection organizationId={orgData.organization.id}>
+                <Button variant="outline">Create</Button>
+              </CreateCollection>
+            </BlankCollection>
+          ) : (
+            orgData.collections.map((coll) => (
+              <ShowCollection
+                key={coll.id}
+                collection={coll}
+                reminders={coll.reminders}
+              />
+            ))
+          )}
+        </CollectionGroup>
+      </main>
     </div>
   );
 }

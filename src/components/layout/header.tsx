@@ -1,5 +1,6 @@
-import { Button } from "@/ui/button";
-import { SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
+import { Button, buttonVariants } from "@/ui/button";
+import { HouseIcon, SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
+import Link from "next/link";
 
 interface HeaderProps {
   sidebarOpen: boolean;
@@ -8,7 +9,7 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center px-4 py-3">
+    <header className="sticky top-0 z-50 flex w-full items-center space-x-2 px-4 py-3">
       <Button
         size="icon"
         variant="ghost"
@@ -21,6 +22,15 @@ const Header = (props: HeaderProps) => {
           <SidebarOpenIcon size={20} strokeWidth={1.5} />
         )}
       </Button>
+      {!props.sidebarOpen && (
+        <Link
+          href="/app"
+          title="Home"
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
+        >
+          <HouseIcon size={20} strokeWidth={1.5} />
+        </Link>
+      )}
     </header>
   );
 };

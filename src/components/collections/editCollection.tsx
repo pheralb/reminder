@@ -17,7 +17,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,7 +30,7 @@ import { editCollection } from "@/server/queries/collections";
 import { ColorSelector } from "@/ui/colorSelector";
 import { colorOptions } from "./colors";
 import { toast } from "@pheralb/toast";
-import { LoaderIcon, PlusIcon } from "lucide-react";
+import { LoaderIcon, PencilLineIcon } from "lucide-react";
 
 interface EditCollectionProps {
   title: string;
@@ -88,20 +87,17 @@ const EditCollection = (props: EditCollectionProps) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleUpdateCollection)}
-            className="space-y-8"
+            className="mt-2 space-y-8"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Organization Name:</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder={field.name} {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -138,9 +134,9 @@ const EditCollection = (props: EditCollectionProps) => {
                 {loading ? (
                   <LoaderIcon size={16} className="animate-spin" />
                 ) : (
-                  <PlusIcon size={16} />
+                  <PencilLineIcon size={16} />
                 )}
-                <span>{loading ? "Creating..." : "Create"}</span>
+                <span>{loading ? "Editing..." : "Edit"}</span>
               </Button>
             </DialogFooter>
           </form>

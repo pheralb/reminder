@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function AppHomepage() {
   return (
-    <div className={cn(container, "flex flex-col space-y-4 pb-5")}>
+    <div className="flex flex-col pb-5">
       <AppOptions>
         <CreateCollection>
           <Button variant="default">
@@ -30,7 +30,7 @@ export default function AppHomepage() {
           </Button>
         </CreateCollection>
       </AppOptions>
-      <CollectionGroup>
+      <main className={cn(container, "mt-6")}>
         <Await
           promise={getCollectionsWithReminders()}
           fallback={<LoadingData text="Preparing..." />}
@@ -48,7 +48,7 @@ export default function AppHomepage() {
                 );
               }
               return (
-                <>
+                <CollectionGroup>
                   {data.map((item, idx) => (
                     <ShowCollection
                       key={item.collection.id ?? idx}
@@ -56,12 +56,12 @@ export default function AppHomepage() {
                       reminders={item.reminders}
                     />
                   ))}
-                </>
+                </CollectionGroup>
               );
             }
           }}
         </Await>
-      </CollectionGroup>
+      </main>
     </div>
   );
 }

@@ -24,7 +24,7 @@ const ColorSelector = forwardRef<HTMLDivElement, ColorSelectorProps>(
       <div
         ref={ref}
         className={cn(
-          "grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-8",
+          "grid grid-cols-5 gap-3 sm:grid-cols-2 md:grid-cols-4",
           className,
         )}
         {...props}
@@ -33,17 +33,19 @@ const ColorSelector = forwardRef<HTMLDivElement, ColorSelectorProps>(
           <div
             key={color.gradient}
             className={cn(
-              "relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-md transition-all",
-              "ring-offset-background hover:scale-105",
-              value === color.gradient && "ring-ring ring-2 ring-offset-2",
-              color.gradient,
+              "flex cursor-pointer flex-col overflow-hidden rounded-md transition-colors duration-200 ease-in-out select-none",
+              "border border-zinc-200 dark:border-zinc-800",
+              "hover:border-zinc-300 dark:hover:border-zinc-700",
+              value === color.gradient &&
+                "ring-ring ring-2 ring-zinc-500 dark:ring-zinc-400",
             )}
             onClick={() => handleColorSelect(color.gradient)}
             title={color.name ?? color.gradient}
           >
-            {value === color.gradient && (
-              <Check className="h-4 w-4 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]" />
-            )}
+            <div className={cn(color.gradient, "h-6 w-full")} />
+            <div className="flex flex-col p-2 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+              <p>{color.name}</p>
+            </div>
           </div>
         ))}
       </div>

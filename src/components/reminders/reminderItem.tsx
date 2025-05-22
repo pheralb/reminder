@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { cn } from "@/utils/cn";
+import { CalendarIcon } from "lucide-react";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
 import { updateReminderStatus } from "@/server/queries/client";
 
@@ -128,7 +129,7 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
   });
 
   return (
-    <div className="flex w-full items-center gap-3 py-2">
+    <div className="flex w-full items-center gap-3.5 py-2">
       <Checkbox
         reminderId={reminderData.id}
         checked={optimisticIsCompleted ?? false}
@@ -151,9 +152,10 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
           </div>
         </div>
         {reminderData.dueDate && (
-          <span className="text-sm text-zinc-500 dark:text-zinc-400">
-            {format(reminderData.dueDate, "MM/dd/yyyy")}
-          </span>
+          <div className="flex items-center space-x-1.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <CalendarIcon size={14} />
+            <span>{format(new Date(reminderData.dueDate), "dd MMM yyyy")}</span>
+          </div>
         )}
         {reminderData.description && (
           <span className="text-sm text-zinc-500 dark:text-zinc-400">

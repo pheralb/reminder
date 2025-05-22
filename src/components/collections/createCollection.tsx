@@ -90,7 +90,7 @@ const CreateCollection = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleCreateCollection)}
-            className="space-y-8"
+            className="space-y-8 mt-2"
           >
             <FormField
               control={form.control}

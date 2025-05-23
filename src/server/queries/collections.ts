@@ -38,8 +38,7 @@ export const getCollectionsWithReminders = async (orgId?: string) => {
             eq(reminder.createdBy, user.id),
           ),
         )
-        .orderBy(reminder.dueDate);
-
+        .orderBy(desc(reminder.createdAt));
       return {
         collection: col,
         reminders,

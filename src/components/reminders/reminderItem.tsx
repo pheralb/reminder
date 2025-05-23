@@ -139,11 +139,11 @@ const ReminderItem = ({ reminderData }: ReminderItemProps) => {
         <div className="flex w-full items-center space-x-3">
           <label
             htmlFor={reminderData.id}
-            className="text-sm leading-none font-medium text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white"
+            className="text-sm text-pretty font-medium text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white"
           >
             {reminderData.title}
           </label>
-          <div className="flex items-center space-x-2.5 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+          <div className="flex items-center shrink-0 space-x-2.5 opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100">
             <EditReminder reminderData={reminderData} />
             <DeleteReminder
               reminderId={reminderData.id}

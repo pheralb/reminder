@@ -16,8 +16,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint ./app",
+    "lint:fix": "eslint ./app --fix",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
@@ -31,16 +31,23 @@
     "react-router": "7.6.0"
   },
   "devDependencies": {
+    "@eslint/js": "9.27.0",
     "@react-router/dev": "7.6.0",
     "@tailwindcss/vite": "4.1.7",
     "@types/node": "20.17.50",
     "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
+    "eslint-plugin-drizzle": "0.2.3",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.1.0",
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.11",
     "tailwindcss": "4.1.7",
     "tw-animate-css": "1.3.0",
     "typescript": "5.8.3",
+    "typescript-eslint": "8.32.1",
     "vite": "6.3.5"
   }
 }

@@ -11,10 +11,9 @@
 /prisma/db.sqlite-journal
 db.sqlite
 
-# Next.js
-/.next/
-/out/
-next-env.d.ts
+# React Router
+/.react-router/
+/build/
 
 # Production
 /build

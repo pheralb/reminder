@@ -2,7 +2,7 @@
 
 <a href="https://reminder.pheralb.dev">
     <img
-        src="./public/screenshot.png"
+        src="./public/images/screenshot.png"
         alt="Reminder App Screenshot"
     />
 </a>

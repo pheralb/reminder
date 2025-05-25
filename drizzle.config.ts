@@ -1,12 +1,12 @@
 import type { Config } from "drizzle-kit";
-import { env } from "@/env";
+import { envServer } from "@/env.server";
 
 export default {
-  schema: "./src/server/db/schema.ts",
+  schema: "./app/database/schema.ts",
   dialect: "postgresql",
   out: "./drizzle",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: envServer.DATABASE_URL,
   },
   tablesFilter: ["reminder_*"],
 } satisfies Config;

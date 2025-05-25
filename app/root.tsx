@@ -8,21 +8,56 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
+  type LoaderFunctionArgs,
 } from "react-router";
 
 // Styles:
 import "@/styles/globals.css";
+import { cn } from "@/utils/cn";
 
-export function Layout({ children }: { children: ReactNode }) {
+// Theme:
+import clsx from "clsx";
+import {
+  useTheme,
+  ThemeProvider,
+  PreventFlashOnWrongTheme,
+} from "remix-themes";
+import { themeSessionResolver } from "@/sessions.server";
+
+// Global SSR loader:
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { getTheme } = await themeSessionResolver(request);
+  return {
+    theme: getTheme(),
+  };
+};
+
+// Global app layout component:
+function App({ children }: { children: ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={clsx(theme)}
+      style={{ colorScheme: clsx(theme) }}
+      suppressHydrationWarning
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
       </head>
-      <body>
+      <body
+        className={cn(
+          "bg-zinc-50 dark:bg-zinc-900",
+          "text-zinc-900 dark:text-zinc-50",
+          "font-sans antialiased",
+        )}
+      >
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -31,8 +66,16 @@ export function Layout({ children }: { children: ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+// App with providers:
+export default function AppWithProviders() {
+  const data = useLoaderData<typeof loader>();
+  return (
+    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
+      <App>
+        <Outlet />
+      </App>
+    </ThemeProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

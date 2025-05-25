@@ -26,7 +26,7 @@ import {
 import clsx from "clsx";
 import { themeSessionResolver } from "@/sessions.server";
 
-// Providers:
+// Clerk:
 import { dark } from "@clerk/themes";
 import { ClerkProvider } from "@clerk/react-router";
 import { rootAuthLoader } from "@clerk/react-router/ssr.server";
@@ -66,6 +66,8 @@ function App({ children }: { children: ReactNode }) {
         className={cn(
           "bg-zinc-50 dark:bg-zinc-900",
           "text-zinc-900 dark:text-zinc-50",
+          "selection:bg-zinc-300 selection:text-zinc-900",
+          "transition-none",
           "font-sans antialiased",
         )}
       >
@@ -81,7 +83,11 @@ function App({ children }: { children: ReactNode }) {
 export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>();
   return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
+    <ThemeProvider
+      specifiedTheme={data.theme}
+      themeAction="/action/set-theme"
+      disableTransitionOnThemeChange
+    >
       <ClerkProvider
         loaderData={data}
         signUpFallbackRedirectUrl="/"

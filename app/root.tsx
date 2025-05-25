@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Route } from "./+types/root";
+import type { OutletContext } from "@/types/outletContext";
 
 import {
   isRouteErrorResponse,
@@ -9,7 +10,6 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  type LoaderFunctionArgs,
 } from "react-router";
 
 // Styles:
@@ -17,20 +17,31 @@ import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 
 // Theme:
-import clsx from "clsx";
 import {
   useTheme,
   ThemeProvider,
   PreventFlashOnWrongTheme,
+  Theme,
 } from "remix-themes";
+import clsx from "clsx";
 import { themeSessionResolver } from "@/sessions.server";
 
+// Providers:
+import { dark } from "@clerk/themes";
+import { ClerkProvider } from "@clerk/react-router";
+import { rootAuthLoader } from "@clerk/react-router/ssr.server";
+
 // Global SSR loader:
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { getTheme } = await themeSessionResolver(request);
-  return {
-    theme: getTheme(),
-  };
+export const loader = async (args: Route.LoaderArgs) => {
+  const { getTheme } = await themeSessionResolver(args.request);
+  return rootAuthLoader(args, ({ request }) => {
+    const { sessionId, userId } = request.auth;
+    return {
+      theme: getTheme(),
+      userId: userId,
+      sessionId: sessionId,
+    };
+  });
 };
 
 // Global app layout component:
@@ -71,9 +82,25 @@ export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
-      <App>
-        <Outlet />
-      </App>
+      <ClerkProvider
+        loaderData={data}
+        signUpFallbackRedirectUrl="/"
+        signInFallbackRedirectUrl="/"
+        appearance={{
+          baseTheme: data.theme === Theme.DARK ? dark : undefined,
+        }}
+      >
+        <App>
+          <Outlet
+            context={
+              {
+                userId: data.userId,
+                sessionId: data.sessionId,
+              } satisfies OutletContext
+            }
+          />
+        </App>
+      </ClerkProvider>
     </ThemeProvider>
   );
 }

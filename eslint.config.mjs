@@ -3,6 +3,7 @@ import globals from "globals";
 
 import tseslint from "typescript-eslint";
 import drizzle from "eslint-plugin-drizzle";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 
@@ -11,6 +12,7 @@ export default tseslint.config(
   {
     extends: [
       js.configs.recommended,
+      jsxA11y.flatConfigs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,

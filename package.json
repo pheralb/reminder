@@ -23,18 +23,23 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
   "dependencies": {
+    "@clerk/themes": "2.2.46",
     "@react-router/fs-routes": "7.6.0",
     "@react-router/node": "7.6.0",
     "@react-router/serve": "7.6.0",
+    "@t3-oss/env-core": "0.13.4",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "drizzle-orm": "0.43.1",
     "isbot": "5.1.28",
     "lucide-react": "0.511.0",
+    "postgres": "3.4.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-router": "7.6.0",
     "remix-themes": "2.0.4",
-    "tailwind-merge": "3.3.0"
+    "tailwind-merge": "3.3.0",
+    "zod": "3.25.28"
   },
   "devDependencies": {
     "@eslint/js": "9.27.0",
@@ -43,6 +48,7 @@
     "@types/node": "20.17.50",
     "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
+    "drizzle-kit": "0.31.1",
     "eslint-plugin-drizzle": "0.2.3",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react-hooks": "5.2.0",

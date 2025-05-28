@@ -7,7 +7,7 @@ on:
     branches: [main, dev, "react-router"]
 
 jobs:
-  lint:
+  build-lint:
     runs-on: ubuntu-latest
 
     steps:

@@ -9,7 +9,7 @@ import {
 } from "@/ui/dropdown-menu";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
-import { PencilIcon, PencilLineIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, PencilLineIcon, TrashIcon, XIcon } from "lucide-react";
 
 import { SidebarLinkStyle } from "@/components/layout/sidebarLink";
 import EditWorkspace from "@/components/workspaces/editWorkspace";
@@ -35,7 +35,7 @@ const WorkspaceOptions = (props: WorkspaceOptionsProps) => {
           props.className,
         )}
       >
-        <PencilIcon size={14} />
+        {isOpen ? <XIcon size={14} /> : <PencilIcon size={14} />}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <EditWorkspace workspaceData={props.organization}>

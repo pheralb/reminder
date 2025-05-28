@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 
-import { Link } from "react-router";
 import { cn } from "@/utils/cn";
-import { useLocation } from "react-router";
+import { NavLink } from "react-router";
 
 interface SidebarLinkProps {
   href: string;
@@ -14,23 +13,24 @@ const SidebarLinkStyle = cn(
   "cursor-pointer flex w-full items-center space-x-2",
   "rounded-md px-4 py-1.5 text-sm",
   "hover:bg-zinc-200 dark:hover:bg-zinc-800",
+  "text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white",
   "transition-colors duration-200 ease-in-out",
 );
 
 const SidebarLink = (props: SidebarLinkProps) => {
-  const location = useLocation();
-  const pathname = location.pathname;
   return (
-    <Link
-      title={props.title}
+    <NavLink
       to={props.href}
-      className={cn(
-        SidebarLinkStyle,
-        pathname === props.href && "bg-zinc-200 dark:bg-zinc-800",
-      )}
+      title={props.title}
+      className={({ isActive }) =>
+        cn(
+          SidebarLinkStyle,
+          isActive && "bg-zinc-200 text-black dark:bg-zinc-800 dark:text-white",
+        )
+      }
     >
       {props.children}
-    </Link>
+    </NavLink>
   );
 };
 

@@ -2,9 +2,9 @@ name: ⚙️ Check
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, "react-router"]
   pull_request:
-    branches: [main, dev]
+    branches: [main, dev, "react-router"]
 
 jobs:
   lint:
@@ -40,5 +40,7 @@ jobs:
       - name: Lint and Typecheck
         run: |
           pnpm run check
-        env:
-          SKIP_ENV_VALIDATION: true
+
+      - name: Build
+        run: |
+          pnpm run build

@@ -19,9 +19,10 @@
 <span>&nbsp;&nbsp;❖&nbsp;&nbsp;</span>
 <a href="https://twitter.com/pheralb_">X/Twitter</a>
 
-![Next.js Badge](https://img.shields.io/badge/Next.js&nbsp;15-000?logo=nextdotjs&logoColor=fff&style=flat)
+![React Router Badge](https://img.shields.io/badge/React%20Router-CA4245?logo=reactrouter&logoColor=fff&style=flat)
 ![Clerk Badge](https://img.shields.io/badge/Clerk-6C47FF?logo=clerk&logoColor=fff&style=flat-square)
 ![Drizzle Badge](https://img.shields.io/badge/Drizzle-C5F74F?logo=drizzle&logoColor=000&style=flat)
+![tRPC Badge](https://img.shields.io/badge/tRPC-2596BE?logo=trpc&logoColor=fff&style=flat)
 ![React Query Badge](https://img.shields.io/badge/React%20Query-FF4154?logo=reactquery&logoColor=fff&style=flat-square)
 ![GitHub stars](https://img.shields.io/github/stars/pheralb/reminder)
 ![GitHub issues](https://img.shields.io/github/issues/pheralb/reminder)
@@ -126,13 +127,14 @@ Ready 🚀
 
 This project is built with the [**T3 Stack**](https://create.t3.gg/) and uses the following technologies:
 
-- [Next.js](https://nextjs.org/) - The React framework for production.
+- [React Router 7 (Framework)](https://reactrouter.com/home) - Create modern, resilient user experiences with web fundamentals.
 - [Clerk](https://clerk.dev/) - Authentication and user management.
 - [Drizzle](https://orm.drizzle.team/) - TypeScript ORM for PostgreSQL.
+- [tRPC](https://trpc.io/) - End-to-end typesafe APIs for TypeScript.
+- [Tanstack Query](https://tanstack.com/query/v4) - A powerful data-fetching library for React.
 - [PostgreSQL](https://www.postgresql.org/) - The world's most advanced open source relational database.
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapid UI development.
 - [shadcn/ui](https://ui.shadcn.com/) - A set of components built with Tailwind CSS and Radix UI.
-- [Tanstack Query](https://tanstack.com/query/v4) - A powerful data-fetching library for React.
 - [Zod](https://zod.dev/) - A TypeScript-first schema declaration and validation library.
 
 ## 📜 License

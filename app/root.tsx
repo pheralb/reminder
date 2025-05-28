@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import type { Route } from "./+types/root";
-import type { OutletContext } from "@/types/outletContext";
 
 import {
   isRouteErrorResponse,
@@ -31,15 +30,16 @@ import { dark } from "@clerk/themes";
 import { ClerkProvider } from "@clerk/react-router";
 import { rootAuthLoader } from "@clerk/react-router/ssr.server";
 
+// Custom Providers:
+import QueryProvider from "@/components/providers/queryProvider";
+import ToasterRRTheme from "@/components/providers/toastProvider";
+
 // Global SSR loader:
 export const loader = async (args: Route.LoaderArgs) => {
   const { getTheme } = await themeSessionResolver(args.request);
-  return rootAuthLoader(args, ({ request }) => {
-    const { sessionId, userId } = request.auth;
+  return rootAuthLoader(args, () => {
     return {
       theme: getTheme(),
-      userId: userId,
-      sessionId: sessionId,
     };
   });
 };
@@ -96,17 +96,13 @@ export default function AppWithProviders() {
           baseTheme: data.theme === Theme.DARK ? dark : undefined,
         }}
       >
-        <App>
-          <Outlet
-            context={
-              {
-                userId: data.userId,
-                sessionId: data.sessionId,
-              } satisfies OutletContext
-            }
-          />
-        </App>
+        <QueryProvider>
+          <App>
+            <Outlet />
+          </App>
+        </QueryProvider>
       </ClerkProvider>
+      <ToasterRRTheme />
     </ThemeProvider>
   );
 }

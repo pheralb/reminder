@@ -1,4 +1,5 @@
 import type { Route } from "./+types/app";
+import type { OutletContext } from "@/types/outletContext";
 import { useState } from "react";
 
 import { envServer } from "@/env.server";
@@ -53,7 +54,13 @@ const AppLayout = () => {
         onClick={() => setIsOpen(!isOpen)}
       />
       <Header sidebarOpen={isOpen} setSidebarOpen={setIsOpen} />
-      <Outlet />
+      <Outlet
+        context={
+          {
+            userId: loaderData.userId,
+          } satisfies OutletContext
+        }
+      />
     </SidebarClient>
   );
 };

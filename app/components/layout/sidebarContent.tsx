@@ -4,20 +4,25 @@ import { cn } from "@/utils/cn";
 import { appConfig } from "@/config";
 
 import { Link } from "react-router";
-import { ArrowUpRight, HouseIcon, SettingsIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  FolderPlusIcon,
+  HouseIcon,
+  SettingsIcon,
+} from "lucide-react";
 
 import UserMenu from "@/components/auth/userMenu";
 import SettingsModal from "@/components/settings/settingsModal";
 
-import { SidebarLink } from "@/components/layout/sidebarLink";
+import { SidebarLink, SidebarLinkStyle } from "@/components/layout/sidebarLink";
 
 import GitHub from "@/ui/logos/github";
 import { Separator } from "@/ui/separator";
 import { ExternalLink } from "@/ui/externalLink";
 import { Button, buttonVariants } from "@/ui/button";
 
-// import ShowOrganizations from "@/components/organizations/showOrganizations";
-// import CreateOrganization from "@/components/organizations/createOrganization";
+import ShowWorkspaces from "@/components/workspaces/showWorkspaces";
+import CreateWorkspace from "@/components/workspaces/createWorkspace";
 
 interface SidebarContentProps {
   isOpen: boolean;
@@ -68,17 +73,17 @@ const SidebarContent = ({ isOpen, user }: SidebarContentProps) => {
                 <HouseIcon size={16} />
                 <span>Home</span>
               </SidebarLink>
-              {/* <CreateOrganization>
+              <CreateWorkspace userId={user.userId}>
                 <button className={cn(SidebarLinkStyle)}>
                   <FolderPlusIcon size={16} />
                   <span>Create Organization</span>
                 </button>
-              </CreateOrganization> */}
+              </CreateWorkspace>
               <Separator className="my-2" />
               <p className="mt-2 mb-3 text-xs text-zinc-600 dark:text-zinc-400">
-                Organizations
+                Workspaces
               </p>
-              {/* <ShowOrganizations userId={user.id} /> */}
+              <ShowWorkspaces userId={user.userId} />
             </nav>
           </div>
         </div>

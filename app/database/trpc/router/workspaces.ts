@@ -53,13 +53,13 @@ export const workspacesRouter = {
 
   // Delete a workspace:
   deleteWorkspace: createTRPCProtectedProcedure
-    .input(z.object({ orgId: z.string() }))
+    .input(z.object({ workspaceId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const deletedWorkspace = await db
         .delete(organization)
         .where(
           and(
-            eq(organization.id, input.orgId),
+            eq(organization.id, input.workspaceId),
             eq(organization.createdBy, ctx.userId),
           ),
         )

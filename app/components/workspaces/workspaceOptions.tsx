@@ -1,6 +1,5 @@
 import type { GetOrganizations } from "@/database/types";
 import type { User } from "@clerk/react-router/ssr.server";
-import { useState } from "react";
 
 import {
   DropdownMenu,
@@ -9,10 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { cn } from "@/utils/cn";
-import { PencilIcon, PencilLineIcon } from "lucide-react";
+import { useState } from "react";
+import { PencilIcon, PencilLineIcon, TrashIcon } from "lucide-react";
 
 import { SidebarLinkStyle } from "@/components/layout/sidebarLink";
 import EditWorkspace from "@/components/workspaces/editWorkspace";
+import DeleteWorkspace from "@/components/workspaces/deleteWorkspace";
 
 interface WorkspaceOptionsProps {
   userId: User["id"];
@@ -43,6 +44,15 @@ const WorkspaceOptions = (props: WorkspaceOptionsProps) => {
             <span>Rename</span>
           </DropdownMenuItem>
         </EditWorkspace>
+        <DeleteWorkspace
+          workspaceId={props.organization.id}
+          workspaceName={props.organization.name}
+        >
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <TrashIcon size={14} />
+            <span>Delete</span>
+          </DropdownMenuItem>
+        </DeleteWorkspace>
       </DropdownMenuContent>
     </DropdownMenu>
   );

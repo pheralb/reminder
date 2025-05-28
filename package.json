@@ -42,6 +42,7 @@
     "@trpc/client": "11.1.2",
     "@trpc/server": "11.1.2",
     "@trpc/tanstack-react-query": "11.1.2",
+    "@vercel/react-router": "1.1.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "date-fns": "4.1.0",

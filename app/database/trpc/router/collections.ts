@@ -49,13 +49,18 @@ export const collectionsRouter = {
 
   // Create Collection
   createCollection: createTRPCProtectedProcedure
-    .input(collectionZodSchema)
+    .input(
+      collectionZodSchema.extend({
+        workspaceId: z.string().optional(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       const newCollection = await db
         .insert(collection)
         .values({
           name: input.name,
           colors: input.colors ?? null,
+          organizationId: input.workspaceId ?? null,
           createdBy: ctx.userId,
         })
         .returning();

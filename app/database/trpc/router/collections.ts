@@ -4,44 +4,61 @@ import { z } from "zod";
 import { db } from "@/database";
 import { and, desc, eq } from "drizzle-orm";
 
-import { collection, reminder } from "@/database/schema";
+import { collection, organization, reminder } from "@/database/schema";
 import { createTRPCProtectedProcedure } from "@/database/trpc/init";
 import { collectionZodSchema } from "@/database/formSchemas/collections";
 
 export const collectionsRouter = {
   // Get collections with reminders for a user:
   getCollectionsWithReminders: createTRPCProtectedProcedure
-    .input(z.object({ workspaceId: z.string().optional() }))
+    .input(z.object({ workspaceId: z.string().optional() }).optional())
     .query(async ({ ctx, input }) => {
       const conditions = [eq(collection.createdBy, ctx.userId)];
 
-      if (input.workspaceId) {
+      if (input?.workspaceId) {
         conditions.push(eq(collection.organizationId, input.workspaceId));
       }
 
       const collections = await db
-        .select()
+        .select({
+          collection: collection,
+          organizationId: organization.id,
+          organizationName: organization.name,
+          organizationSlug: organization.slug,
+        })
         .from(collection)
+        .leftJoin(organization, eq(collection.organizationId, organization.id))
         .where(and(...conditions))
         .orderBy(desc(collection.createdAt));
 
       const collectionsWithReminders = await Promise.all(
-        collections.map(async (col) => {
-          const reminders = await db
-            .select()
-            .from(reminder)
-            .where(
-              and(
-                eq(reminder.collectionId, col.id),
-                eq(reminder.createdBy, ctx.userId),
-              ),
-            )
-            .orderBy(desc(reminder.createdAt));
-          return {
+        collections.map(
+          async ({
             collection: col,
-            reminders,
-          };
-        }),
+            organizationName,
+            organizationSlug,
+            organizationId,
+          }) => {
+            const reminders = await db
+              .select()
+              .from(reminder)
+              .where(
+                and(
+                  eq(reminder.collectionId, col.id),
+                  eq(reminder.createdBy, ctx.userId),
+                ),
+              )
+              .orderBy(desc(reminder.createdAt));
+
+            return {
+              collection: col,
+              organizationId,
+              organizationName,
+              organizationSlug,
+              reminders,
+            };
+          },
+        ),
       );
 
       return collectionsWithReminders;

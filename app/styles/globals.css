@@ -6,12 +6,28 @@
 /* Dark Mode */
 @custom-variant dark (&:is(.dark *));
 
+/* Fonts */
+@font-face {
+  font-family: "InterVariable";
+  src: url("/fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Onest";
+  src: url("/fonts/Onest-Medium.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
 @theme {
-  /* Fonts */
   --font-sans:
-    var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "InterVariable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-onest:
-    var(--font-onest), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Onest", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }

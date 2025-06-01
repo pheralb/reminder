@@ -1,5 +1,6 @@
 import type { InsertCollection } from "@/database/types";
 import { useState, type ReactNode } from "react";
+import { useRevalidator } from "react-router";
 
 import {
   Dialog,
@@ -24,20 +25,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 interface CreateCollectionProps {
   children: ReactNode;
   workspaceId?: string;
+  revalidateData?: boolean;
 }
 
-const CreateCollection = ({ children, workspaceId }: CreateCollectionProps) => {
+const CreateCollection = ({
+  children,
+  workspaceId,
+  revalidateData,
+}: CreateCollectionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const revalidator = useRevalidator();
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
   const insertCollection = useMutation(
     trpc.collections.createCollection.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries({
-          queryKey: trpc.collections.getCollectionsWithReminders.queryKey(),
-        });
+        if (revalidateData) {
+          await revalidator.revalidate();
+        } else {
+          await queryClient.invalidateQueries({
+            queryKey: trpc.collections.getCollectionsWithReminders.queryKey(),
+          });
+        }
       },
     }),
   );
@@ -87,6 +98,7 @@ const CreateCollection = ({ children, workspaceId }: CreateCollectionProps) => {
         <ManageCollectionsForm
           form={form}
           isLoading={loading}
+          statusText="Create"
           loadingText="Creating collection..."
           onSendForm={handleCreateCollection}
           onCancelForm={handleOnClose}

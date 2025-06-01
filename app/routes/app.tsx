@@ -4,13 +4,14 @@ import { useState } from "react";
 
 import { envServer } from "@/env.server";
 import { getAuth } from "@clerk/react-router/ssr.server";
-import { Outlet, redirect, useLoaderData } from "react-router";
+import { Outlet, redirect, useLoaderData, useNavigation } from "react-router";
 import { createClerkClient } from "@clerk/react-router/api.server";
 
 import { cn } from "@/utils/cn";
 import Header from "@/components/layout/header";
 import SidebarClient from "@/components/layout/sidebar";
 import SidebarContent from "@/components/layout/sidebarContent";
+import LoadingData from "@/components/loadingData";
 
 export async function loader(args: Route.LoaderArgs) {
   const { userId } = await getAuth(args);
@@ -32,6 +33,8 @@ export async function loader(args: Route.LoaderArgs) {
 const AppLayout = () => {
   const loaderData = useLoaderData<typeof loader>();
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
   return (
     <SidebarClient isOpen={isOpen}>
       <SidebarContent
@@ -54,13 +57,17 @@ const AppLayout = () => {
         onClick={() => setIsOpen(!isOpen)}
       />
       <Header sidebarOpen={isOpen} setSidebarOpen={setIsOpen} />
-      <Outlet
-        context={
-          {
-            userId: loaderData.userId,
-          } satisfies OutletContext
-        }
-      />
+      {isNavigating ? (
+        <LoadingData text="Preparing..." />
+      ) : (
+        <Outlet
+          context={
+            {
+              userId: loaderData.userId,
+            } satisfies OutletContext
+          }
+        />
+      )}
     </SidebarClient>
   );
 };

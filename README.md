@@ -65,8 +65,8 @@ pnpm install
 4. Create a `.env` file in the root directory and add your environment variables:
 
 - `DATABASE_URL`: Your **PostgreSQL** database URL. You can use [Railway](https://railway.app/) or [Neon](https://neon.tech/) to create a free PostgreSQL database.
-- `CLERK_SECRET_KEY` & `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk secret key. You can create a free account on [Clerk](https://clerk.dev/) and get your secret key from the dashboard.
-- `NEXT_PUBLIC_CLERK_**_URL`: The URL to redirect users after sign-in and sign-up.
+- `CLERK_SECRET_KEY` & `VITE_CLERK_PUBLISHABLE_KEY`: Your Clerk secret key. You can create a free account on [Clerk](https://clerk.dev/) and get your secret key from the dashboard.
+- `VITE_CLERK_**_URL`: The URL to redirect users after sign-in and sign-up.
 
 ```bash
 # DATABASE URL:
@@ -74,10 +74,10 @@ DATABASE_URL=""
 
 # CLERK:
 CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=
-NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
-NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=
+VITE_CLERK_PUBLISHABLE_KEY=
+VITE_CLERK_SIGN_IN_URL=
+VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
+VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=
 ```
 
 5. Push the `reminder_` tables to your database:
@@ -98,7 +98,7 @@ Ready 🚀
 
 **Global**
 
-- [ ] Refactor forms. Use one only form for create and update (working).
+- [x] Refactor forms. Use one only form for create and update.
 - [ ] Improve UI/UX for mobile devices.
 - [ ] Improve Metadata, add OG Image.
 

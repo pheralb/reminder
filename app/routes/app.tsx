@@ -49,10 +49,11 @@ const AppLayout = () => {
       <button
         title="Toggle Sidebar"
         className={cn(
-          "absolute left-0 z-50 h-screen w-1",
-          "hover:bg-zinc-400 dark:hover:bg-zinc-600",
-          "transition-colors duration-200 ease-in-out",
+          isOpen ? "left-60" : "left-0",
+          "absolute z-50 h-screen w-[3px]",
+          "hover:bg-zinc-400/40 dark:hover:bg-zinc-600/40",
           "cursor-w-resize",
+          "hover:transition-colors",
         )}
         onClick={() => setIsOpen(!isOpen)}
       />
